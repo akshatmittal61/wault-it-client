@@ -1,10 +1,9 @@
 import { http } from "@/connections";
-import { IUser } from "@/types";
+import { ApiRes, IUser } from "@/types";
 
-export const verifyUserIfLoggedIn = async (): Promise<{
-	message: string;
-	data: IUser;
-}> => {
-	const response = await http.get("/auth/verify");
+export const verifyUserIfLoggedIn = async (
+	headers?: any
+): Promise<ApiRes<IUser>> => {
+	const response = await http.get("/auth/verify", { headers });
 	return response.data;
 };

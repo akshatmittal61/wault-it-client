@@ -1,6 +1,6 @@
 import React from "react";
 
-export type AvatarProps = React.HTMLAttributes<HTMLDivElement> & {
+export interface IAvatarProps extends React.HTMLAttributes<HTMLDivElement> {
 	src: string;
 	alt: string;
 	fallback?: string;
@@ -8,9 +8,4 @@ export type AvatarProps = React.HTMLAttributes<HTMLDivElement> & {
 	className?: string;
 	onClick?: () => void;
 	size?: "small" | "medium" | "large" | number;
-};
-
-export type AvatarStackProps = Omit<AvatarProps, "src" | "alt" | "children"> & {
-	children: Array<{ src: string; alt: string }>;
-	stack?: boolean;
-};
+}

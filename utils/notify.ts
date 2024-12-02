@@ -41,6 +41,4 @@ class Notify {
 	promise = toast.promise;
 }
 
-const notify = new Notify();
-
-export { notify };
+export const notify = new Notify();

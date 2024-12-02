@@ -1,4 +1,4 @@
-export const safeParse = <T>(parse: (_: any) => T, input: any): T => {
+export const genericParse = <T>(parse: (_: any) => T, input: any): T => {
 	try {
 		const output = parse(input);
 		return output;
@@ -8,18 +8,27 @@ export const safeParse = <T>(parse: (_: any) => T, input: any): T => {
 	}
 };
 
-export const getString = (input: any): string => {
+export const safeParse = <T>(parse: (_: any) => T, input: any): T | null => {
+	try {
+		const output = parse(input);
+		return output;
+	} catch {
+		return null;
+	}
+};
+
+export const getString = <T extends string>(input: any): T => {
 	// TODO: Replace with zod
 	if (typeof input != "string") {
 		throw new Error(
 			`${input} of type ${typeof input} is not a valid string!`
 		);
 	}
-	return input;
+	return input as T;
 };
 
-export const getNonEmptyString = (input: any): string => {
-	const output = getString(input);
+export const getNonEmptyString = <T extends string>(input: any): T => {
+	const output = getString<T>(input);
 	if (output === "") {
 		throw new Error(`${input} is an empty string!`);
 	}
@@ -73,7 +82,7 @@ export const getBoolean = (input: any): boolean => {
 	}
 };
 
-export const getArray = <T>(input: any): T[] => {
+export const getArray = <T = string>(input: any): T[] => {
 	if (!Array.isArray(input)) {
 		throw new Error(
 			`${input} of type ${typeof input} is not a valid array!`
@@ -91,7 +100,7 @@ export const getSingletonValue = <T>(input: T[]): T => {
 	return input[0];
 };
 
-export const getNonNullValue = <T>(input: T | null): T => {
+export const getNonNullValue = <T>(input: T | undefined | null): T => {
 	if (input === null || input === undefined) {
 		throw new Error(`${input} is null!`);
 	}

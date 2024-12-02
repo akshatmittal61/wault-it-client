@@ -18,7 +18,7 @@ interface ErrorPageProps {
 
 const classes = stylesConfig(styles, "error");
 
-export const Error: React.FC<ErrorPageProps> = ({
+const Error: React.FC<ErrorPageProps> = ({
 	title,
 	description,
 	image,
@@ -39,7 +39,7 @@ export const Error: React.FC<ErrorPageProps> = ({
 							url: frontendBaseUrl + "/images/lost.png",
 							width: 800,
 							height: 600,
-							alt: "NextJS Boilerplate",
+							alt: title,
 							type: "image/png",
 						},
 					],
@@ -55,19 +55,30 @@ export const Error: React.FC<ErrorPageProps> = ({
 					>
 						{title}
 					</Typography>
-					<Button variant="filled" onClick={() => button.action()}>
+					{description ? (
+						<Typography
+							as="p"
+							size="lg"
+							weight="medium"
+							className={classes("-description")}
+						>
+							{description}
+						</Typography>
+					) : null}
+					<Button
+						size="large"
+						variant="filled"
+						onClick={() => button.action()}
+					>
 						{button.label}
 					</Button>
 				</div>
 				<div className={classes("-image")}>
-					<Image
-						src={image}
-						alt="NextJS Boilerplate"
-						width={800}
-						height={600}
-					/>
+					<Image src={image} alt={title} width={800} height={600} />
 				</div>
 			</main>
 		</>
 	);
 };
+
+export default Error;

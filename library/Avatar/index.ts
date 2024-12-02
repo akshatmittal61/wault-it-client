@@ -1,4 +1,2 @@
-import Avatars from "./multiple";
-import Avatar from "./single";
-
-export { Avatar, Avatars };
+export * from "./multiple";
+export * from "./single";

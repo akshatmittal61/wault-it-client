@@ -1,13 +1,13 @@
 import { fallbackAssets } from "@/constants";
-import { stylesConfig } from "@/utils";
+import { getImageUrlFromDriveLink, stylesConfig } from "@/utils";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import { AvatarProps } from "./types";
+import { IAvatarProps } from "./types";
 
 const classes = stylesConfig(styles);
 
-const Avatar: React.FC<AvatarProps> = ({
+export const Avatar: React.FC<IAvatarProps> = ({
 	src,
 	alt,
 	fallback = fallbackAssets.avatar,
@@ -22,9 +22,12 @@ const Avatar: React.FC<AvatarProps> = ({
 			? true
 			: false
 	);
-	const [imageUrl, setImageUrl] = useState(
-		src && (src.startsWith("https://") || src.startsWith("/")) ? src : ""
-	);
+	const imageUrl = (() => {
+		if (src && (src.startsWith("https://") || src.startsWith("/"))) {
+			return getImageUrlFromDriveLink(src);
+		}
+		return "";
+	})();
 
 	const getAvatarSize = () => {
 		switch (size) {
@@ -39,25 +42,12 @@ const Avatar: React.FC<AvatarProps> = ({
 		}
 	};
 
-	const getImageUrlFromDriveLink = (link: string) => {
-		// eslint-disable-next-line no-useless-escape
-		const regex = /^https:\/\/drive\.google\.com\/file\/d\/([^\/]+)(\/|$)/;
-		const match = link.match(regex);
-		if (match && match[1]) {
-			const assetUrl = `https://lh3.googleusercontent.com/d/${match[1]}=w1000`;
-			return assetUrl;
-		} else {
-			return link;
-		}
-	};
-
 	useEffect(() => {
-		if (src && (src.startsWith("https://") || src.startsWith("/"))) {
-			setIsImageValid(true);
-		} else {
-			setIsImageValid(false);
-		}
-		setImageUrl(getImageUrlFromDriveLink(src));
+		setIsImageValid(
+			src && (src.startsWith("https://") || src.startsWith("/"))
+				? true
+				: false
+		);
 	}, [src, fallback]);
 
 	return (
@@ -102,5 +92,3 @@ const Avatar: React.FC<AvatarProps> = ({
 		</div>
 	);
 };
-
-export default Avatar;

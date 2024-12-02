@@ -3,6 +3,7 @@ export type FileExtension =
 	| "md"
 	| "json"
 	| "csv"
+	| "log"
 	| "png"
 	| "jpg"
 	| "jpeg"

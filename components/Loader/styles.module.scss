@@ -41,22 +41,22 @@
 	}
 
 	&-ball:nth-child(1) {
-		background-color: var(--theme-green);
+		background-color: var(--material-green);
 		animation-delay: 0.1s;
 	}
 
 	&-ball:nth-child(2) {
-		background-color: var(--theme-red);
+		background-color: var(--material-red);
 		animation-delay: 0.2s;
 	}
 
 	&-ball:nth-child(3) {
-		background-color: var(--theme-green-dark);
+		background-color: var(--material-blue);
 		animation-delay: 0.3s;
 	}
 
 	&-ball:nth-child(4) {
-		background-color: var(--theme-orange);
+		background-color: var(--material-yellow);
 		animation-delay: 0.4s;
 	}
 

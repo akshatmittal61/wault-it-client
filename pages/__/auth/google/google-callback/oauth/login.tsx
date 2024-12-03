@@ -1,4 +1,4 @@
-import { api } from "@/connections";
+import { AuthApi } from "@/connections";
 import { routes } from "@/constants";
 import { useStore } from "@/hooks";
 import { Logger } from "@/log";
@@ -17,7 +17,7 @@ const GoogleOAuthRedirectedPage: GoogleOAuthRedirectedPageProps = (props) => {
 	const { dispatch, setUser } = useStore();
 	const continueWithGoogle = async () => {
 		try {
-			const res = await api.auth.continueOAuthWithGoogle(props.token);
+			const res = await AuthApi.continueOAuthWithGoogle(props.token);
 			Logger.debug("Continue with google response", res.data);
 			dispatch(setUser(res.data));
 			if (res.data.name) {
@@ -55,7 +55,7 @@ export const getServerSideProps = async (context: any) => {
 	const { query } = context;
 	try {
 		const code = genericParse(getNonEmptyString, query.code);
-		const verificationRes = await api.auth.verifyOAuthSignIn(code);
+		const verificationRes = await AuthApi.verifyOAuthSignIn(code);
 		Logger.debug("Token after verification", verificationRes.data);
 		return { props: { token: verificationRes.data } };
 	} catch (error) {

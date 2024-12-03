@@ -6,11 +6,11 @@ import { ServerSideResult } from "@/types";
 import { stylesConfig } from "@/utils";
 import React from "react";
 
-const classes = stylesConfig(styles, "home");
+const classes = stylesConfig(styles, "landing");
 
 const LandingPage: React.FC = () => {
 	return (
-		<main className={classes("")}>
+		<main id="landing" className={classes("")}>
 			<Landing.Hero />
 		</main>
 	);

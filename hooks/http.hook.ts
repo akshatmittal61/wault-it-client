@@ -134,6 +134,7 @@ export const useHttpClient = <Type extends any = any>(
 			setLoading(true);
 			const response = await dispatchToStore(callback(args)).unwrap();
 			if (response === null) throw new Error("No data found");
+			setData(response);
 			return response;
 		} catch (err) {
 			setError(err);

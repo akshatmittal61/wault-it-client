@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { IUser } from "./user";
+import { IUser } from "./models";
 
 export interface ApiRequest extends NextApiRequest {
 	user?: IUser;

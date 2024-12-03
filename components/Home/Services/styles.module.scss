@@ -1,0 +1,35 @@
+@import "@/styles/config/mixins";
+
+.home-services {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	border-radius: 12px;
+	box-shadow:
+		color(srgb 0 0 0 / 0.3) 0px 1px 2px 0px,
+		color(srgb 0 0 0 / 0.15) 0px 2px 6px 2px;
+
+	&-service {
+		width: 100%;
+		padding: 12px 16px;
+		cursor: pointer;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 24px;
+
+		& > *:last-child {
+			font-size: 1rem;
+		}
+
+		&:hover {
+			background-color: var(--theme-back-shadow);
+		}
+
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--theme-light-grey);
+		}
+	}
+}

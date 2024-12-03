@@ -16,29 +16,34 @@ html {
 	font-size: 16px;
 
 	@include responsive(phone) {
-		font-size: 12px;
+		font-size: 10px;
 	}
 
 	@include responsive(tablet) {
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	@include responsive(desktop) {
-		font-size: 16px;
+		font-size: 14px;
 	}
 
 	@include responsive(large-desktop) {
-		font-size: 18px;
+		font-size: 16px;
 	}
 
 	@include responsive(extra-large-desktop) {
-		font-size: 20px;
+		font-size: 18px;
 	}
 }
 
 body {
 	font-family: var(--font-poppins);
 	overflow-x: hidden;
+}
+
+body > #__next > main#home,
+body > #__next > main#landing {
+	padding-top: var(--head-height);
 }
 
 .dispn {

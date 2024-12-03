@@ -1,4 +1,4 @@
-import { authHelpers, userHelpers } from "@/context/helpers";
+import { authHelpers } from "@/context/helpers";
 import { IUser } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -40,11 +40,6 @@ export const userSlice = createSlice({
 				return state;
 			}
 		);
-		// Update User
-		builder.addCase(userHelpers.updateUser.fulfilled, (state, action) => {
-			state = { ...state, ...action.payload };
-			return state;
-		});
 		// Logout User
 		builder.addCase(authHelpers.logoutUser.fulfilled, (state) => {
 			state = initialState;

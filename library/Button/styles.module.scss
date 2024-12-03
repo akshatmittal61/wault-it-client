@@ -8,7 +8,7 @@
 	justify-content: center;
 	align-items: center;
 	gap: 6px;
-	border-radius: 8px;
+	border-radius: 500px;
 	border: 1px solid transparent;
 	white-space: nowrap;
 	flex: 0 0 auto;
@@ -26,7 +26,7 @@
 
 		&--outlined {
 			background-color: transparent;
-			color: var(--theme-white);
+			color: var(--theme-black);
 			border-color: var(--accent-color);
 		}
 
@@ -38,18 +38,18 @@
 
 	&--size {
 		&--small {
-			padding: 12px 24px;
-			@include typography(s, bold);
+			padding: 0.5rem 1.1rem;
+			@include typography(sm, bold);
 		}
 
 		&--medium {
-			padding: 14px 28px;
-			@include typography(md, regular);
+			padding: 0.65rem 1.35rem;
+			@include typography(s, regular);
 		}
 
 		&--large {
-			padding: 16px 30px;
-			@include typography(xl, regular);
+			padding: 0.875rem 1.5rem;
+			@include typography(lg, regular);
 		}
 	}
 

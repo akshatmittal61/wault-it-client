@@ -1,2 +1,2 @@
-export * as auth from "./auth.api";
-export * as user from "./user.api";
+export * from "./auth.api";
+export * from "./library.api";

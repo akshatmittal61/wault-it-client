@@ -1,4 +1,4 @@
-import { api } from "@/connections";
+import { AuthApi } from "@/connections";
 import { Logger } from "@/log";
 import { ServerSideAuthMiddleware } from "@/types";
 
@@ -14,7 +14,7 @@ export const authenticatedPage: ServerSideAuthMiddleware = async (
 	}
 	try {
 		const headers = { cookie: req.headers.cookie };
-		const { data: user } = await api.auth.verifyUserIfLoggedIn(headers);
+		const { data: user } = await AuthApi.verifyUserIfLoggedIn(headers);
 		Logger.debug("user", user);
 		if (user.name) {
 			return onLoggedInAndOnboarded(user, headers);

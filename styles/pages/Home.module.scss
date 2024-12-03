@@ -1,9 +1,21 @@
+.landing {
+	width: 100vw;
+	min-height: 100vh;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-flow: column;
+	gap: 8px;
+	padding: 24px;
+}
+
 .home {
 	width: 100vw;
 	min-height: 100vh;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	flex-flow: column;
-	gap: 36px;
+	gap: 8px;
+	padding: 24px 15%;
 }

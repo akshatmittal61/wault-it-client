@@ -5,18 +5,22 @@ import { Typography } from "@/library";
 import styles from "@/styles/pages/Auth.module.scss";
 import { IUser, ServerSideResult } from "@/types";
 import { stylesConfig } from "@/utils";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 const classes = stylesConfig(styles, "oauth");
 
-type LogoutPageProps = {
-	user: IUser;
-};
+type LogoutPageProps = { user: IUser };
 
-const LogoutPage: React.FC<LogoutPageProps> = (props) => {
+const LogoutPage: React.FC<LogoutPageProps> = () => {
+	const router = useRouter();
 	const { logoutUser, dispatch } = useStore();
+	const logout = async () => {
+		await dispatch(logoutUser()).unwrap();
+		router.push(routes.LOGIN);
+	};
 	useEffect(() => {
-		dispatch(logoutUser());
+		logout();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
@@ -30,7 +34,6 @@ const LogoutPage: React.FC<LogoutPageProps> = (props) => {
 			>
 				Logout
 			</Typography>
-			<pre>{JSON.stringify(props, null, 2)}</pre>
 		</div>
 	);
 };

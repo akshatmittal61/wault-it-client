@@ -45,7 +45,6 @@ const GoogleOAuthRedirectedPage: GoogleOAuthRedirectedPageProps = (props) => {
 				height={400}
 				className={classes("-loader")}
 			/>
-			<pre>{JSON.stringify(props, null, 2)}</pre>
 		</main>
 	);
 };

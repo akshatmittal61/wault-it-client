@@ -1,0 +1,29 @@
+@import "@/styles/config/mixins";
+
+.landing-hero {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 24px;
+	padding: 24px;
+
+	img {
+		width: 40%;
+		object-fit: cover;
+	}
+
+	&-content {
+		width: 60%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 24px;
+
+		p {
+			width: 60%;
+		}
+	}
+}

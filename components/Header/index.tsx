@@ -1,4 +1,5 @@
 import { routes } from "@/constants";
+import { useStore } from "@/hooks";
 import { Button } from "@/library";
 import { stylesConfig } from "@/utils";
 import Image from "next/image";
@@ -6,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { FiLogIn } from "react-icons/fi";
+import Search from "./search";
 import styles from "./styles.module.scss";
 
 interface IHeaderProps {}
@@ -14,6 +16,7 @@ const classes = stylesConfig(styles, "header");
 
 const Header: React.FC<IHeaderProps> = () => {
 	const router = useRouter();
+	const { user } = useStore();
 	return (
 		<header className={classes("")}>
 			<Link href="/">
@@ -25,14 +28,18 @@ const Header: React.FC<IHeaderProps> = () => {
 					height={512}
 				/>
 			</Link>
-			<Button
-				onClick={() => {
-					router.push(routes.LOGIN);
-				}}
-				icon={<FiLogIn />}
-			>
-				Login
-			</Button>
+			{user.email ? (
+				<Search />
+			) : (
+				<Button
+					onClick={() => {
+						router.push(routes.LOGIN);
+					}}
+					icon={<FiLogIn />}
+				>
+					Login
+				</Button>
+			)}
 		</header>
 	);
 };

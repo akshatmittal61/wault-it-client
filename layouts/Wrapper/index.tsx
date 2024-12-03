@@ -14,7 +14,7 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 		routes.PRIVACY_POLICY,
 	];
 
-	// only show router when route is changing
+	// only show loader when route is changing
 
 	useEffect(() => {
 		router.events.on("routeChangeStart", () => {
@@ -92,7 +92,7 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 					siteName: "Password Manager",
 				}}
 			/>
-			{staticPagesPaths.includes(router.pathname) ? <Header /> : null}
+			<Header />
 			{showLoader ? <Loader.Bar /> : null}
 			{children}
 			{staticPagesPaths.includes(router.pathname) ? <Footer /> : null}

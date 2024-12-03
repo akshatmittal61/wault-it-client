@@ -1,7 +1,8 @@
 import { stylesConfig } from "@/utils";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { FiChevronDown } from "react-icons/fi";
 import styles from "./styles.module.scss";
-import { InputProps } from "./types";
+import { InputDropdownOption, InputProps } from "./types";
 
 const classes = stylesConfig(styles, "input");
 
@@ -10,9 +11,64 @@ const Input: React.FC<InputProps> = ({
 	styles,
 	style,
 	className,
+	dropdown,
+	icon,
+	error,
+	errorMessage,
 	...props
 }) => {
 	const inputRef = useRef<any>(null);
+	const [optionsToRender, setOptionsToRender] = useState<
+		InputDropdownOption[]
+	>(dropdown?.options || []);
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (
+				dropdown?.enabled &&
+				optionsToRender?.length > 0 &&
+				inputRef.current === document.activeElement
+			) {
+				if (e.key === "ArrowDown") {
+					e.preventDefault();
+					const nextIndex =
+						optionsToRender?.findIndex(
+							(option) => option.value === inputRef.current?.value
+						) + 1;
+					if (nextIndex < optionsToRender?.length) {
+						inputRef.current.value =
+							optionsToRender[nextIndex].value;
+					}
+				} else if (e.key === "ArrowUp") {
+					e.preventDefault();
+					const nextIndex =
+						optionsToRender?.findIndex(
+							(option) => option.value === inputRef.current?.value
+						) - 1;
+					if (nextIndex >= 0) {
+						inputRef.current.value =
+							optionsToRender[nextIndex].value;
+					}
+				} else if (e.key === "Enter") {
+					e.preventDefault();
+					const selectedOption = optionsToRender?.find(
+						(option) => option.value === inputRef.current?.value
+					);
+					if (selectedOption) {
+						dropdown.onSelect(selectedOption);
+						inputRef.current.blur();
+					}
+				} else if (e.key === "Escape") {
+					e.preventDefault();
+					inputRef.current.blur();
+				}
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [dropdown, optionsToRender]);
 
 	return (
 		<div className={classes("") + ` ${className}`} style={styles?.box}>
@@ -22,6 +78,9 @@ const Input: React.FC<InputProps> = ({
 				</label>
 			) : null}
 			<div className={classes("__input-container")}>
+				{icon && !dropdown?.enabled ? (
+					<div className={classes("__icon")}>{icon}</div>
+				) : null}
 				<input
 					className={classes("__input")}
 					ref={inputRef}
@@ -29,8 +88,64 @@ const Input: React.FC<InputProps> = ({
 						...styles?.input,
 						...style,
 					}}
+					onInvalid={(e) => {
+						e.currentTarget.setCustomValidity(errorMessage + "");
+					}}
+					onInput={(e) => {
+						e.currentTarget.setCustomValidity("");
+					}}
+					title={error ? errorMessage : ""}
+					onChange={(() => {
+						if (dropdown?.enabled) {
+							return (e) => {
+								const search = e.target.value;
+								const options = dropdown.options.filter(
+									(option) =>
+										option.label
+											.toLowerCase()
+											.includes(search.toLowerCase())
+								);
+								setOptionsToRender(options);
+								if (dropdown.onSearch)
+									dropdown.onSearch(search);
+								else if (props.onChange) props.onChange(e);
+							};
+						} else {
+							return props.onChange;
+						}
+					})()}
 					{...props}
 				/>
+				{dropdown?.enabled ? (
+					<div
+						className={classes("__icon", "__icon--dropdown")}
+						onClick={() => {
+							inputRef.current.focus();
+						}}
+					>
+						<FiChevronDown />
+					</div>
+				) : null}
+				{dropdown?.enabled ? (
+					<div
+						className={classes("__dropdown")}
+						style={styles?.dropdown}
+					>
+						{optionsToRender?.map((option, index) => (
+							<div
+								key={index}
+								className={classes("__dropdown__option")}
+								onClick={() => {
+									dropdown?.onSelect(option);
+									inputRef.current.blur();
+								}}
+								style={styles?.dropdownOption}
+							>
+								{option.label}
+							</div>
+						))}
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

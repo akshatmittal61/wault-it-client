@@ -12,3 +12,15 @@ export const fetchAuthenticatedUser = createAsyncThunk(
 		}
 	}
 );
+
+export const logoutUser = createAsyncThunk(
+	"auth/logout",
+	async (_, thunkApi) => {
+		try {
+			const res = await api.auth.logout();
+			return Promise.resolve(res.data);
+		} catch (error: any) {
+			return thunkApi.rejectWithValue(error.response.data);
+		}
+	}
+);

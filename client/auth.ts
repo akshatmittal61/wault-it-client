@@ -9,12 +9,13 @@ export const authenticatedPage: ServerSideAuthMiddleware = async (
 	const { req } = context;
 	Logger.debug("ssr cookies", req.headers.cookie, req.cookies);
 	const cookies = req.cookies;
-	if (!cookies.token) {
+	if (!cookies.accessToken || !cookies.refreshToken) {
 		return onLoggedOut();
 	}
 	try {
 		const headers = { cookie: req.headers.cookie };
 		const { data: user } = await api.auth.verifyUserIfLoggedIn(headers);
+		Logger.debug("user", user);
 		if (user.name) {
 			return onLoggedInAndOnboarded(user, headers);
 		} else {

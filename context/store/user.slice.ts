@@ -5,9 +5,9 @@ import { createSlice } from "@reduxjs/toolkit";
 type UserSlice = IUser;
 
 const initialState: UserSlice = {
-	id: "",
 	name: "",
 	email: "",
+	avatar: "",
 };
 
 export const userSlice = createSlice({
@@ -43,6 +43,11 @@ export const userSlice = createSlice({
 		// Update User
 		builder.addCase(userHelpers.updateUser.fulfilled, (state, action) => {
 			state = { ...state, ...action.payload };
+			return state;
+		});
+		// Logout User
+		builder.addCase(authHelpers.logoutUser.fulfilled, (state) => {
+			state = initialState;
 			return state;
 		});
 	},

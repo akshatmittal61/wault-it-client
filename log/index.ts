@@ -62,13 +62,13 @@ export class Logger {
 	}
 	private static getMessage(...messages: Array<any>): string {
 		const message = messages
-			.map((m) =>
-				typeof m === "string"
-					? `"${m}"`
-					: typeof m === "object"
-						? JSON.stringify(m)
-						: m
-			)
+			.map((m) => {
+				if (m === null) return "null";
+				if (m === undefined) return "undefined";
+				if (typeof m === "string") return `"${m}"`;
+				if (typeof m === "object") return JSON.stringify(m);
+				else return m;
+			})
 			.map((m) => m.toString());
 		return `${message}`;
 	}

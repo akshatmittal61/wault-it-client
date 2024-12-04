@@ -51,6 +51,7 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 						<Service.Artifact
 							key={`room-${serviceName}-${artifact.id}`}
 							artifact={artifact}
+							onDelete={getArtifacts}
 						/>
 					))}
 				</Masonry>

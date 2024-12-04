@@ -30,4 +30,11 @@ export class LibraryApi {
 		);
 		return response.data;
 	}
+	public static async deleteArtifact(
+		id: string,
+		headers?: any
+	): Promise<ApiRes<IArtifact>> {
+		const response = await http.delete(`/artifacts/${id}`, { headers });
+		return response.data;
+	}
 }

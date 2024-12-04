@@ -1,10 +1,12 @@
 import { authenticatedPage } from "@/client";
 import { routes } from "@/constants";
-import { Typography } from "@/library";
+import { useHttpClient, useStore } from "@/hooks";
+import { Avatar, Button, Input } from "@/library";
 import styles from "@/styles/pages/Auth.module.scss";
-import { IUser, ServerSideResult } from "@/types";
-import { stylesConfig } from "@/utils";
-import React from "react";
+import { IUpdateUser, IUser, ServerSideResult } from "@/types";
+import { Notify, stylesConfig } from "@/utils";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
 const classes = stylesConfig(styles, "onboarding");
 
@@ -13,19 +15,55 @@ type OnboardingPageProps = {
 };
 
 const OnboardingPage: React.FC<OnboardingPageProps> = (props) => {
+	const { dispatch, setUser, updateProfile } = useStore();
+	const client = useHttpClient<IUser>(props.user);
+	const router = useRouter();
+	const [userDetails, setUserDetails] = useState<IUpdateUser>({
+		name: props.user.name,
+		avatar: props.user.avatar,
+	});
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setUserDetails((prev) => ({ ...prev, [name]: value }));
+	};
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!userDetails.name) return Notify.error("Name is required");
+		await client.dispatch(updateProfile, userDetails);
+		router.push(routes.HOME);
+	};
+
+	useEffect(() => {
+		dispatch(setUser(props.user));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
-		<div className={classes("")}>
-			<Typography
-				as="h1"
-				family="montserrat"
-				size="xxl"
-				weight="medium"
-				className={classes("-title")}
-			>
-				Onboarding
-			</Typography>
-			<pre>{JSON.stringify(props, null, 2)}</pre>
-		</div>
+		<main id="onboarding" className={classes("")}>
+			<form onSubmit={handleSubmit}>
+				<Avatar src={userDetails.avatar || ""} alt={userDetails.name} />
+				<Input
+					name="name"
+					value={userDetails.name}
+					onChange={handleChange}
+					label="Name"
+					placeholder="Enter your name"
+					type="text"
+				/>
+				<Input
+					name="avatar"
+					value={userDetails.avatar}
+					onChange={handleChange}
+					label="Avatar"
+					placeholder="Enter your avatar URL"
+					type="url"
+				/>
+				<Button loading={client.loading} type="submit">
+					Save
+				</Button>
+			</form>
+		</main>
 	);
 };
 

@@ -3,7 +3,7 @@
 .header {
 	width: 100%;
 	height: var(--head-height);
-	padding: 8px 60px;
+	padding: 8px 40px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -35,5 +35,16 @@
 		object-fit: contain;
 		cursor: pointer;
 		user-select: none;
+	}
+
+	&-right {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 24px;
+	}
+
+	&-avatar {
+		cursor: pointer;
 	}
 }

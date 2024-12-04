@@ -105,6 +105,28 @@
 	}
 }
 
+.onboarding {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 24px;
+
+	form {
+		width: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		gap: 24px;
+
+		& > * {
+			width: 100%;
+		}
+	}
+}
+
 @keyframes rotate {
 	from {
 		transform: rotateY(0deg);

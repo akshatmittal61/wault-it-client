@@ -8,11 +8,14 @@ import { Toaster } from "react-hot-toast";
 export const Wrapper: React.FC<any> = ({ children }) => {
 	const router = useRouter();
 	const [showLoader, setShowLoader] = useState(false);
-	const staticPagesPaths: Array<string> = [
+	const wrappablePagesPaths: Array<string> = [
 		routes.ROOT,
-		routes.ERROR,
+		routes.HOME,
 		routes.PRIVACY_POLICY,
+		routes.TERMS_AND_CONDITIONS,
+		routes.ERROR,
 	];
+	const isWrappablePage = wrappablePagesPaths.includes(router.pathname);
 
 	// only show loader when route is changing
 
@@ -92,10 +95,10 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 					siteName: "Password Manager",
 				}}
 			/>
-			<Header />
+			{isWrappablePage ? <Header /> : null}
 			{showLoader ? <Loader.Bar /> : null}
 			{children}
-			{staticPagesPaths.includes(router.pathname) ? <Footer /> : null}
+			{isWrappablePage ? <Footer /> : null}
 			<Toaster position="top-center" />
 		</>
 	);

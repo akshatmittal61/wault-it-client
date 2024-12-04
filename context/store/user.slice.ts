@@ -1,4 +1,4 @@
-import { authHelpers } from "@/context/helpers";
+import { authHelpers, userHelpers } from "@/context/helpers";
 import { IUser } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -45,6 +45,14 @@ export const userSlice = createSlice({
 			state = initialState;
 			return state;
 		});
+		// Update Profile
+		builder.addCase(
+			userHelpers.updateProfile.fulfilled,
+			(state, action) => {
+				state = { ...state, ...action.payload };
+				return state;
+			}
+		);
 	},
 });
 

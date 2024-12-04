@@ -1,6 +1,6 @@
 import { routes } from "@/constants";
 import { useStore } from "@/hooks";
-import { Button } from "@/library";
+import { Avatar, Button } from "@/library";
 import { stylesConfig } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +29,18 @@ const Header: React.FC<IHeaderProps> = () => {
 				/>
 			</Link>
 			{user.email ? (
-				<Search />
+				<div className={classes("-right")}>
+					<Search />
+					<Avatar
+						src={user.avatar || ""}
+						alt={user.name}
+						className={classes("-avatar")}
+						size={42}
+						onClick={() => {
+							router.push(routes.PROFILE);
+						}}
+					/>
+				</div>
 			) : (
 				<Button
 					onClick={() => {

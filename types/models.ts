@@ -4,6 +4,8 @@ export type IUser = {
 	avatar?: string;
 };
 
+export type IUpdateUser = Omit<IUser, "email">;
+
 export type IArtifact = {
 	id: string;
 	service: string;

@@ -25,6 +25,7 @@ export const useStore = () => {
 		...librarySlice.actions,
 		// helpers
 		...allHelpers.authHelpers,
+		...allHelpers.userHelpers,
 		...allHelpers.libraryHelpers,
 	};
 };

@@ -3,6 +3,7 @@ export const routes = Object.freeze({
 	HOME: "/home",
 	LOGIN: "/login",
 	ONBOARDING: "/onboarding",
+	ROOM: (name: string) => `/room?name=${name}`,
 	PROFILE: "/profile",
 	SETTINGS: "/settings",
 	ERROR: "/500",

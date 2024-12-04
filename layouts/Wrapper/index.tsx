@@ -10,6 +10,7 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 	const [showLoader, setShowLoader] = useState(false);
 	const wrappablePagesPaths: Array<string> = [
 		routes.ROOT,
+		routes.ROOM("").split("?")[0],
 		routes.HOME,
 		routes.PRIVACY_POLICY,
 		routes.TERMS_AND_CONDITIONS,

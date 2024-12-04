@@ -3,6 +3,7 @@ export * from "./Confirmation";
 export * as Home from "./Home";
 export * as Landing from "./Landing";
 export * as Loader from "./Loader";
+export * as Service from "./Service";
 import Error from "./Error";
 import Footer from "./Footer";
 import Header from "./Header";

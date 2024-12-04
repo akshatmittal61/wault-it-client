@@ -1,8 +1,9 @@
 import { authenticatedPage } from "@/client";
-import { Loader } from "@/components";
+import { Loader, Service } from "@/components";
 import { LibraryApi } from "@/connections";
 import { routes } from "@/constants";
 import { useHttpClient, useStore } from "@/hooks";
+import { Masonry } from "@/layouts";
 import { Typography } from "@/library";
 import { Logger } from "@/log";
 import styles from "@/styles/pages/Room.module.scss";
@@ -40,21 +41,20 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 			>
 				Room {serviceName}
 			</Typography>
-			<div>
-				{client.loading ? (
-					<Loader.Spinner />
-				) : client.data.length === 0 ? (
-					<Typography>
-						No artifacts found for {serviceName}
-					</Typography>
-				) : (
-					client.data.map((artifact) => (
-						<Typography key={`room-${serviceName}-${artifact.id}`}>
-							{artifact.identifier}
-						</Typography>
-					))
-				)}
-			</div>
+			{client.loading ? (
+				<Loader.Spinner />
+			) : client.data.length === 0 ? (
+				<Typography>No artifacts found for {serviceName}</Typography>
+			) : (
+				<Masonry className={classes("-listing")}>
+					{client.data.map((artifact) => (
+						<Service.Artifact
+							key={`room-${serviceName}-${artifact.id}`}
+							artifact={artifact}
+						/>
+					))}
+				</Masonry>
+			)}
 		</main>
 	);
 };

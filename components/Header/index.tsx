@@ -46,6 +46,7 @@ const Header: React.FC<IHeaderProps> = () => {
 					onClick={() => {
 						router.push(routes.LOGIN);
 					}}
+					size="large"
 					icon={<FiLogIn />}
 				>
 					Login

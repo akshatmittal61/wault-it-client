@@ -32,6 +32,7 @@ const LandingHero: React.FC<ILandingHeroProps> = () => {
 				<Button
 					icon={<FiLogIn />}
 					iconPosition="right"
+					size="large"
 					onClick={() => router.push(routes.LOGIN)}
 				>
 					Get Started

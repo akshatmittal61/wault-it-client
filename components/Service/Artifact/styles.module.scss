@@ -82,3 +82,25 @@
 		padding: 1rem;
 	}
 }
+
+.artifact-revealer {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	gap: 24px;
+
+	&-form {
+		width: 100%;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
+		gap: 24px;
+
+		button {
+			width: 100%;
+		}
+	}
+}

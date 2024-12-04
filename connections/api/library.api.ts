@@ -19,4 +19,15 @@ export class LibraryApi {
 		);
 		return response.data;
 	}
+	public static async getRevealedArtifact(
+		{ artifactId, privateKey }: { artifactId: string; privateKey: string },
+		headers?: any
+	) {
+		const response = await http.post(
+			`/artifacts/reveal/${artifactId}`,
+			{ privateKey },
+			{ headers }
+		);
+		return response.data;
+	}
 }

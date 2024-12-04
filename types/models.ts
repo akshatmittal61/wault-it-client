@@ -15,6 +15,8 @@ export type IArtifact = {
 	updatedAt: string;
 };
 
+export type IRevealedArtifact = IArtifact & { password: string };
+
 export type IArtifactsBucket = {
 	service: string;
 	artifacts: IArtifact[];

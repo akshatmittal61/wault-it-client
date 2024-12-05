@@ -1,5 +1,5 @@
 import { authenticatedPage } from "@/client";
-import { Home as Components, Loader, Service } from "@/components";
+import { Home as Components, Loader, Placeholder, Service } from "@/components";
 import { routes } from "@/constants";
 import { useHttpClient, useStore } from "@/hooks";
 import styles from "@/styles/pages/Home.module.scss";
@@ -12,7 +12,8 @@ const classes = stylesConfig(styles, "home");
 type HomePageProps = { user: IUser };
 
 const HomePage: React.FC<HomePageProps> = (props) => {
-	const { dispatch, setUser, getAllServices } = useStore();
+	const { dispatch, setUser, services, getAllServices, searchQuery } =
+		useStore();
 	const client = useHttpClient<Array<string>>();
 	const [openAddArtifactPopup, setopenAddArtifactPopup] = useState(false);
 
@@ -32,9 +33,33 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 				<Components.Head onAdd={() => setopenAddArtifactPopup(true)} />
 				{client.loading ? (
 					<Loader.Spinner />
-				) : client.data.length > 0 ? (
+				) : services.length > 0 ? (
 					<Components.Services />
-				) : null}
+				) : (
+					<Placeholder
+						title={(() => {
+							if (searchQuery.length > 0) {
+								if (searchQuery.length > 3) {
+									return "No results for " + searchQuery;
+								} else {
+									return "Use more than 3 characters to search";
+								}
+							}
+							return "No services found";
+						})()}
+						subtitle={searchQuery.length > 0 ? "" : "Add a service"}
+						cta={(() => {
+							if (searchQuery.length > 0) {
+								return undefined;
+							} else {
+								return {
+									label: "Add a service",
+									action: () => setopenAddArtifactPopup(true),
+								};
+							}
+						})()}
+					/>
+				)}
 			</main>
 			{openAddArtifactPopup ? (
 				<Service.AddArtifact

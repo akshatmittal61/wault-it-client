@@ -30,6 +30,12 @@ export class LibraryApi {
 		);
 		return response.data;
 	}
+	public static async searchForServices(
+		query: string
+	): Promise<ApiRes<Array<string>>> {
+		const res = await http.post("/services/search", { query });
+		return res.data;
+	}
 	public static async createArtifact(
 		artifact: ICreateArtifact,
 		headers?: any

@@ -1,11 +1,10 @@
 export * as Auth from "./Auth";
 export * from "./Confirmation";
+export { default as Error } from "./Error";
+export { default as Footer } from "./Footer";
+export { default as Header } from "./Header";
 export * as Home from "./Home";
 export * as Landing from "./Landing";
 export * as Loader from "./Loader";
+export { default as Placeholder } from "./Placeholder";
 export * as Service from "./Service";
-import Error from "./Error";
-import Footer from "./Footer";
-import Header from "./Header";
-
-export { Error, Footer, Header };

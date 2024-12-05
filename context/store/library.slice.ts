@@ -1,3 +1,4 @@
+import { Logger } from "@/log";
 import { createSlice } from "@reduxjs/toolkit";
 import { libraryHelpers } from "../helpers";
 
@@ -16,6 +17,7 @@ export const librarySlice = createSlice({
 	initialState,
 	reducers: {
 		setServices: (state, action) => {
+			Logger.debug("setServices", state, action.payload);
 			state.services = action.payload;
 		},
 		setSearchQuery: (state, action) => {
@@ -26,6 +28,18 @@ export const librarySlice = createSlice({
 		builder.addCase(
 			libraryHelpers.getAllServices.fulfilled,
 			(state, action) => {
+				Logger.debug("getAllServices reducer", state, action.payload);
+				state.services = action.payload;
+			}
+		);
+		builder.addCase(
+			libraryHelpers.searchForServices.fulfilled,
+			(state, action) => {
+				Logger.debug(
+					"searchForServices reducer",
+					state,
+					action.payload
+				);
 				state.services = action.payload;
 			}
 		);

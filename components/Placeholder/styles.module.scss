@@ -1,0 +1,17 @@
+@import "@/styles/config/mixins";
+
+.placeholder {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 24px;
+	text-align: center;
+
+	img {
+		width: 300px;
+		height: auto;
+		object-fit: contain;
+	}
+}

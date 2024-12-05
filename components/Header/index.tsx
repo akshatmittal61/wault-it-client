@@ -30,7 +30,7 @@ const Header: React.FC<IHeaderProps> = () => {
 			</Link>
 			{user.email ? (
 				<div className={classes("-right")}>
-					<Search />
+					{router.pathname === routes.HOME ? <Search /> : null}
 					<Avatar
 						src={user.avatar || ""}
 						alt={user.name}

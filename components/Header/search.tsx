@@ -1,7 +1,9 @@
-import { useDebounce, useHttpClient } from "@/hooks";
+import { useDebounce, useHttpClient, useStore } from "@/hooks";
 import { Input, MaterialIcon } from "@/library";
+import { Logger } from "@/log";
+import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./styles.module.scss";
 
 interface ISearchProps {}
@@ -9,27 +11,39 @@ interface ISearchProps {}
 const classes = stylesConfig(styles, "search");
 
 const Search: React.FC<ISearchProps> = () => {
-	const [, setSearchResults] = useState<Array<string>>([]);
-	const { loading: searching, call: searchApiCall } = useHttpClient<
-		Array<string>
-	>([]);
+	const {
+		getAllServices,
+		searchForServices,
+		setSearchQuery,
+		setServices,
+		dispatch: dispatchToStore,
+	} = useStore();
+	const { dispatch, data: searchResults } = useHttpClient<Array<string>>([]);
+	const client = useHttpClient<Array<string>>();
 	const [searchStr, debouncedSearchStr, setSearchStr] = useDebounce<string>(
 		"",
 		1000
 	);
 
 	const handleSearch = async (searchStr: any) => {
-		const res = await searchApiCall(async (_: string) => {
-			return { message: "", data: [] };
-		}, searchStr);
-		setSearchResults(res);
+		try {
+			const res = await dispatch(searchForServices, searchStr);
+			Logger.debug("search results", searchResults, res);
+		} catch (error) {
+			Notify.error(error);
+		}
 	};
 
 	useEffect(() => {
-		if (debouncedSearchStr && debouncedSearchStr.length >= 3) {
-			handleSearch(debouncedSearchStr);
+		dispatchToStore(setSearchQuery(debouncedSearchStr));
+		if (debouncedSearchStr) {
+			if (debouncedSearchStr.length >= 3) {
+				handleSearch(debouncedSearchStr);
+			} else {
+				dispatchToStore(setServices([]));
+			}
 		} else {
-			setSearchResults([]);
+			client.dispatch(getAllServices, undefined);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedSearchStr]);
@@ -39,7 +53,6 @@ const Search: React.FC<ISearchProps> = () => {
 				name="search"
 				placeholder="Search"
 				value={searchStr}
-				disabled={searching}
 				icon={<MaterialIcon icon="search" />}
 				onChange={(e: any) => setSearchStr(e.target.value)}
 			/>

@@ -1,5 +1,6 @@
 {
-	"name": "nextjs-template",
+	"name": "wault",
+	"description": "Store and secure passwords for everything, encrypted behind one paraphrase that only you remember.",
 	"version": "0.1.0",
 	"private": true,
 	"engines": {

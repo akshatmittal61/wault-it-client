@@ -1,5 +1,4 @@
 import { apiMethods, backendBaseUrl, serverBaseUrl } from "@/constants";
-import { Logger } from "@/log";
 import { T_API_METHODS } from "@/types";
 import { sleep } from "@/utils";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
@@ -80,8 +79,6 @@ class HttpWrapper {
 					},
 				};
 			}
-			Logger.debug(method, url, data, config);
-			const startTime = new Date().getTime();
 			if (method === apiMethods.GET) {
 				response = await this.http.get("", config);
 			} else if (method === apiMethods.POST) {
@@ -93,18 +90,12 @@ class HttpWrapper {
 			} else if (method === apiMethods.DELETE) {
 				response = await this.http.delete("", config);
 			}
-			const endTime = new Date().getTime();
-			Logger.debug(`Request took ${endTime - startTime}ms`);
 			return response;
 		} catch (error: any) {
 			if (error?.response?.status === 503) {
 				if (this.retryConfig.retryCount > 0) {
 					this.retryConfig.retryCount--;
 					await sleep(this.retryConfig.retryDelay);
-					Logger.debug(
-						`Retrying ${method} ${url}...`,
-						`Retries left: ${this.retryConfig.retryCount}`
-					);
 					return await this.makeRequest(method, url, {
 						data,
 						config,

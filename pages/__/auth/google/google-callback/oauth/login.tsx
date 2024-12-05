@@ -18,7 +18,6 @@ const GoogleOAuthRedirectedPage: GoogleOAuthRedirectedPageProps = (props) => {
 	const continueWithGoogle = async () => {
 		try {
 			const res = await AuthApi.continueOAuthWithGoogle(props.token);
-			Logger.debug("Continue with google response", res.data);
 			dispatch(setUser(res.data));
 			if (res.data.name) {
 				router.push(routes.HOME);
@@ -31,7 +30,6 @@ const GoogleOAuthRedirectedPage: GoogleOAuthRedirectedPageProps = (props) => {
 		}
 	};
 	useEffect(() => {
-		Logger.debug("Google OAuth Redirected Page", props);
 		continueWithGoogle();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -56,7 +54,6 @@ export const getServerSideProps = async (context: any) => {
 	try {
 		const code = genericParse(getNonEmptyString, query.code);
 		const verificationRes = await AuthApi.verifyOAuthSignIn(code);
-		Logger.debug("Token after verification", verificationRes.data);
 		return { props: { token: verificationRes.data } };
 	} catch (error) {
 		Logger.error(error);

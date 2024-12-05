@@ -52,7 +52,6 @@ const getCookiesToSet = (endpoint: string, headers: any) => {
 	} else {
 		const accessToken = headers["x-auth-access-token"];
 		const refreshToken = headers["x-auth-refresh-token"];
-		Logger.debug("got new tokens", accessToken, refreshToken);
 		if (accessToken) {
 			cookiesToSet.push({
 				name: "accessToken",
@@ -80,7 +79,6 @@ const handler: NextApiHandler = async (req: ApiRequest, res: ApiResponse) => {
 		);
 		const endpoint = getNonEmptyString(req.headers["x-endpoint"]);
 		const body = req.body || {};
-		Logger.debug("proxy route", method, endpoint, body, headers);
 		const response = await callApi(method, endpoint, body, { headers });
 		const cookiesToSet = getCookiesToSet(endpoint, response.headers);
 		if (cookiesToSet.length > 0) {
@@ -95,7 +93,6 @@ const handler: NextApiHandler = async (req: ApiRequest, res: ApiResponse) => {
 		return res.status(response.status).json(response.data);
 	} catch (err: any) {
 		Logger.error(err);
-		Logger.debug(err?.response?.status);
 		if (
 			[HTTP.status.UNAUTHORIZED, HTTP.status.FORBIDDEN].includes(
 				err?.response?.status

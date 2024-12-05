@@ -1,6 +1,5 @@
 import { useDebounce, useHttpClient, useStore } from "@/hooks";
 import { Input, MaterialIcon } from "@/library";
-import { Logger } from "@/log";
 import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
 import React, { useEffect } from "react";
@@ -18,7 +17,7 @@ const Search: React.FC<ISearchProps> = () => {
 		setServices,
 		dispatch: dispatchToStore,
 	} = useStore();
-	const { dispatch, data: searchResults } = useHttpClient<Array<string>>([]);
+	const { dispatch } = useHttpClient<Array<string>>([]);
 	const client = useHttpClient<Array<string>>();
 	const [searchStr, debouncedSearchStr, setSearchStr] = useDebounce<string>(
 		"",
@@ -27,8 +26,7 @@ const Search: React.FC<ISearchProps> = () => {
 
 	const handleSearch = async (searchStr: any) => {
 		try {
-			const res = await dispatch(searchForServices, searchStr);
-			Logger.debug("search results", searchResults, res);
+			await dispatch(searchForServices, searchStr);
 		} catch (error) {
 			Notify.error(error);
 		}

@@ -5,7 +5,6 @@ import { routes } from "@/constants";
 import { useHttpClient, useStore } from "@/hooks";
 import { Masonry } from "@/layouts";
 import { Typography } from "@/library";
-import { Logger } from "@/log";
 import styles from "@/styles/pages/Room.module.scss";
 import { IArtifact, IUser, ServerSideResult } from "@/types";
 import { getNonEmptyString, stylesConfig } from "@/utils";
@@ -27,7 +26,6 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 	useEffect(() => {
 		dispatch(setUser(props.user));
 		getArtifacts();
-		Logger.debug("Room Page", serviceName);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (

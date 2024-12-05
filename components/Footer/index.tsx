@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
 				<div className={classes("-logo")}>
 					<Image
 						src="/favicon.png"
-						alt="Wault"
+						alt="Wault It"
 						onClick={() => {
 							router.push("/");
 						}}
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
 				</ul>
 				<div className={classes("-copyright")}>
 					<p>
-						© {new Date().getFullYear()} Wault. All rights
+						© {new Date().getFullYear()} Wault It. All rights
 						reserved.
 					</p>
 				</div>

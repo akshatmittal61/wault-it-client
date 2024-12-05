@@ -1,8 +1,8 @@
-# Wault
+# Wault It
 
 Store and secure passwords for everything, encrypted behind one paraphrase that only you remember.
 
-Check this out: [Wault](https://wault.vercel.app)
+Check this out: [Wault It](https://wault-it.vercel.app)
 
 # Author
 

@@ -41,7 +41,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
 				weight="medium"
 				className={classes("-title")}
 			>
-				Welcome to Wault
+				Welcome to Wault It
 			</Typography>
 			<Typography
 				as="p"

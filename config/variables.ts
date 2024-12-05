@@ -9,6 +9,6 @@ export const url: Record<T_BASE_URL, string> = {
 };
 
 export const nodeEnv: "development" | "production" | "test" =
-	process.env.NODE_ENV || "production";
+	process.env.NODE_ENV || process.env.NEXT_PUBLIC_NODE_ENV || "production";
 
-export const service = process.env.SERVICE || "wault";
+export const service = process.env.NEXT_PUBLIC_SERVICE || "wault";

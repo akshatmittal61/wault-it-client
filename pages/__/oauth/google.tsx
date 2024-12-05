@@ -1,6 +1,5 @@
 import { Auth } from "@/components";
 import { oauth_google } from "@/config";
-import { Logger } from "@/log";
 import React from "react";
 
 const GoogleOAuthRedirectPage: React.FC = () => {
@@ -43,7 +42,6 @@ export const getServerSideProps = async () => {
 	const url = new URL(oauth_google.endpoint);
 	url.search = new URLSearchParams(query).toString();
 	const complete_url = url.toString();
-	Logger.debug(complete_url);
 	return {
 		redirect: {
 			destination: complete_url,

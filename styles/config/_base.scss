@@ -41,8 +41,14 @@ body {
 	overflow-x: hidden;
 }
 
+main {
+	min-height: 100vh;
+}
+
 body > #__next > main#home,
-body > #__next > main#landing {
+body > #__next > main#landing,
+body > #__next > main#room,
+body > #__next > main#profile {
 	padding-top: var(--head-height);
 }
 

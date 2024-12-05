@@ -1,11 +1,11 @@
 import { authenticatedPage } from "@/client";
-import { Home as Components, Loader } from "@/components";
+import { Home as Components, Loader, Service } from "@/components";
 import { routes } from "@/constants";
 import { useHttpClient, useStore } from "@/hooks";
 import styles from "@/styles/pages/Home.module.scss";
 import { IUser, ServerSideResult } from "@/types";
 import { stylesConfig } from "@/utils";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const classes = stylesConfig(styles, "home");
 
@@ -14,6 +14,7 @@ type HomePageProps = { user: IUser };
 const HomePage: React.FC<HomePageProps> = (props) => {
 	const { dispatch, setUser, getAllServices } = useStore();
 	const client = useHttpClient<Array<string>>();
+	const [openAddArtifactPopup, setopenAddArtifactPopup] = useState(false);
 
 	const getServices = async () => {
 		await client.dispatch(getAllServices, undefined);
@@ -26,14 +27,25 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 	}, []);
 
 	return (
-		<main id="home" className={classes("")}>
-			<Components.Head />
-			{client.loading ? (
-				<Loader.Spinner />
-			) : client.data.length > 0 ? (
-				<Components.Services />
+		<>
+			<main id="home" className={classes("")}>
+				<Components.Head onAdd={() => setopenAddArtifactPopup(true)} />
+				{client.loading ? (
+					<Loader.Spinner />
+				) : client.data.length > 0 ? (
+					<Components.Services />
+				) : null}
+			</main>
+			{openAddArtifactPopup ? (
+				<Service.AddArtifact
+					onClose={() => setopenAddArtifactPopup(false)}
+					onAdd={() => {
+						getServices();
+						setopenAddArtifactPopup(false);
+					}}
+				/>
 			) : null}
-		</main>
+		</>
 	);
 };
 

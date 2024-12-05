@@ -15,6 +15,11 @@ export type IArtifact = {
 	updatedAt: string;
 };
 
+export type ICreateArtifact = Omit<
+	IArtifact,
+	"id" | "createdAt" | "updatedAt"
+> & { password: string; privateKey: string };
+
 export type IRevealedArtifact = IArtifact & { password: string };
 
 export type IArtifactsBucket = {

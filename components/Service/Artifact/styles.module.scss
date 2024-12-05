@@ -104,3 +104,21 @@
 		}
 	}
 }
+
+.artifact-add {
+	width: 100%;
+
+	&-input {
+		width: 95%;
+		margin: 0.5rem auto;
+
+		&--full {
+			width: 97.5%;
+		}
+	}
+
+	button {
+		width: 97.5%;
+		margin: 1rem auto;
+	}
+}

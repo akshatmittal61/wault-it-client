@@ -6,11 +6,13 @@ import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
 import React, { useState } from "react";
 import Block from "./block";
+import Updater from "./edit";
 import Revealer from "./revealer";
 import styles from "./styles.module.scss";
 
 interface IServiceArtifactProps {
 	artifact: IArtifact;
+	onUpdate: () => void;
 	onDelete: () => void;
 }
 
@@ -18,9 +20,11 @@ const classes = stylesConfig(styles, "service-artifact");
 
 const ServiceArtifact: React.FC<IServiceArtifactProps> = ({
 	artifact,
+	onUpdate,
 	onDelete,
 }) => {
 	const [showRevealer, setShowRevealer] = useState(false);
+	const [showUpdater, setShowUpdater] = useState(false);
 	const { loading: deleting, call: deleteExpense } = useHttpClient();
 	const deleteArtifactHelper = async () => {
 		try {
@@ -72,6 +76,7 @@ const ServiceArtifact: React.FC<IServiceArtifactProps> = ({
 						size="small"
 						variant="outlined"
 						icon={<MaterialIcon icon="edit" />}
+						onClick={() => setShowUpdater(true)}
 					>
 						Edit
 					</Button>
@@ -90,6 +95,14 @@ const ServiceArtifact: React.FC<IServiceArtifactProps> = ({
 					id={artifact.id}
 					identifier={artifact.identifier}
 					onClose={() => setShowRevealer(false)}
+				/>
+			) : null}
+			{showUpdater ? (
+				<Updater
+					id={artifact.id}
+					artifact={artifact}
+					onClose={() => setShowUpdater(false)}
+					onUpdate={onUpdate}
 				/>
 			) : null}
 			{deleteArtifactConfirmation.showPopup

@@ -1,5 +1,5 @@
 import { http } from "@/connections";
-import { ApiRes, IArtifact, ICreateArtifact } from "@/types";
+import { ApiRes, IArtifact, ICreateArtifact, IUpdateArtifact } from "@/types";
 
 export class LibraryApi {
 	public static async getAllServices(
@@ -35,6 +35,16 @@ export class LibraryApi {
 		headers?: any
 	) {
 		const response = await http.post("/artifacts", artifact, { headers });
+		return response.data;
+	}
+	public static async updateArtifact(
+		id: string,
+		artifact: IUpdateArtifact,
+		headers?: any
+	) {
+		const response = await http.patch(`/artifacts/${id}`, artifact, {
+			headers,
+		});
 		return response.data;
 	}
 	public static async deleteArtifact(

@@ -11,4 +11,4 @@ export const url: Record<T_BASE_URL, string> = {
 export const nodeEnv: "development" | "production" | "test" =
 	process.env.NODE_ENV || "production";
 
-export const service = process.env.SERVICE || "password-manager";
+export const service = process.env.SERVICE || "wault";

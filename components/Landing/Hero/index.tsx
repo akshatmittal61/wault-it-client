@@ -23,7 +23,7 @@ const LandingHero: React.FC<ILandingHeroProps> = () => {
 			/>
 			<div className={classes("-content")}>
 				<Typography size="head-1" as="h1" weight="semi-bold">
-					Password Manager
+					Wault
 				</Typography>
 				<Typography size="lg" as="p">
 					Store and secure passwords for everything, encrypted behind

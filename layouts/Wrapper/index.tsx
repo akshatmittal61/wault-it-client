@@ -35,12 +35,12 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 	return (
 		<>
 			<Seo
-				title="Password Manager"
+				title="Wault"
 				description="Store and secure passwords for everything, encrypted behind one paraphrase that only you remember."
 				image={`${frontendBaseUrl}/og-image.png`}
 				canonical={frontendBaseUrl}
 				author="Akshat Mittal"
-				siteName="Password Manager"
+				siteName="Wault"
 				themeColor="#4AA63C"
 				icons={["icon", "shortcut icon", "apple-touch-icon"].map(
 					(item) => {
@@ -55,14 +55,14 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 					card: "summary_large_image",
 					site: "@akshatmittal61",
 					author: "@akshatmittal61",
-					title: "Password Manager",
+					title: "Wault",
 					description:
 						"Store and secure passwords for everything, encrypted behind one paraphrase that only you remember.",
 					image: `${frontendBaseUrl}/og-image.png`,
 					url: frontendBaseUrl,
 				}}
 				og={{
-					title: "Password Manager",
+					title: "Wault",
 					description:
 						"Store and secure passwords for everything, encrypted behind one paraphrase that only you remember.",
 					images: [
@@ -72,7 +72,7 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 							type: "image/png",
 							width: 1200,
 							height: 630,
-							alt: "Password Manager",
+							alt: "Wault",
 						},
 						{
 							url: `${frontendBaseUrl}/favicon-192.png`,
@@ -80,7 +80,7 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 							type: "image/png",
 							width: 192,
 							height: 192,
-							alt: "Password Manager",
+							alt: "Wault",
 						},
 						{
 							url: `${frontendBaseUrl}/favicon-512.png`,
@@ -88,12 +88,12 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 							type: "image/png",
 							width: 512,
 							height: 512,
-							alt: "Password Manager",
+							alt: "Wault",
 						},
 					],
 					url: frontendBaseUrl,
 					type: "website",
-					siteName: "Password Manager",
+					siteName: "Wault",
 				}}
 			/>
 			{isWrappablePage ? <Header /> : null}

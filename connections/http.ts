@@ -117,6 +117,8 @@ export const http = new HttpWrapper(
 			"Content-Type": "application/json",
 		},
 		withCredentials: true,
+		timeout: 10000,
+		timeoutErrorMessage: "HTTP Request timed out",
 	})
 );
 
@@ -126,4 +128,6 @@ export const server = axios.create({
 		"Content-Type": "application/json",
 	},
 	withCredentials: true,
+	timeout: 10000,
+	timeoutErrorMessage: "Server Request timed out",
 });

@@ -12,7 +12,8 @@ const Input: React.FC<InputProps> = ({
 	style,
 	className,
 	dropdown,
-	icon,
+	leftIcon,
+	rightIcon,
 	error,
 	errorMessage,
 	...props
@@ -57,10 +58,15 @@ const Input: React.FC<InputProps> = ({
 					if (selectedOption) {
 						dropdown.onSelect(selectedOption);
 						inputRef.current.blur();
+						setOptionsToRender(dropdown?.options || []);
 					}
 				} else if (e.key === "Escape") {
 					e.preventDefault();
 					inputRef.current.blur();
+					setOptionsToRender(dropdown?.options || []);
+				} else if (e.key === "Tab") {
+					inputRef.current.blur();
+					setOptionsToRender(dropdown?.options || []);
 				}
 			}
 		};
@@ -78,8 +84,10 @@ const Input: React.FC<InputProps> = ({
 				</label>
 			) : null}
 			<div className={classes("__input-container")}>
-				{icon && !dropdown?.enabled ? (
-					<div className={classes("__icon")}>{icon}</div>
+				{leftIcon && !dropdown?.enabled ? (
+					<div className={classes("__icon", "__icon--left")}>
+						{leftIcon}
+					</div>
 				) : null}
 				<input
 					className={classes("__input")}
@@ -116,9 +124,18 @@ const Input: React.FC<InputProps> = ({
 					})()}
 					{...props}
 				/>
+				{rightIcon && !dropdown?.enabled ? (
+					<div className={classes("__icon", "__icon--right")}>
+						{rightIcon}
+					</div>
+				) : null}
 				{dropdown?.enabled ? (
 					<div
-						className={classes("__icon", "__icon--dropdown")}
+						className={classes(
+							"__icon",
+							"__icon--right",
+							"__icon--dropdown"
+						)}
 						onClick={() => {
 							inputRef.current.focus();
 						}}

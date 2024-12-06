@@ -24,5 +24,6 @@ export interface InputProps
 	};
 	error?: boolean;
 	errorMessage?: string;
-	icon?: React.ReactNode;
+	leftIcon?: React.ReactNode;
+	rightIcon?: React.ReactNode;
 }

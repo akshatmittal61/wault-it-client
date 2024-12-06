@@ -51,7 +51,7 @@ const Search: React.FC<ISearchProps> = () => {
 				name="search"
 				placeholder="Search"
 				value={searchStr}
-				icon={<MaterialIcon icon="search" />}
+				leftIcon={<MaterialIcon icon="search" />}
 				onChange={(e: any) => setSearchStr(e.target.value)}
 			/>
 		</form>

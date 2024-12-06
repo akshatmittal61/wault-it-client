@@ -1,4 +1,4 @@
-import { Input, MaterialIcon } from "@/library";
+import { InputPrivateKey } from "@/components";
 import { stylesConfig } from "@/utils/functions";
 import React from "react";
 import { FiUpload } from "react-icons/fi";
@@ -25,18 +25,11 @@ const ArtifactsImporterSubmit: React.FC<IArtifactsImporterSubmitProps> = ({
 	};
 	return (
 		<form onSubmit={handleSubmit} className={classes("-submit")}>
-			<Input
+			<InputPrivateKey
 				className={classes("-input", "-input--full")}
-				type="password"
-				name="privateKey"
-				label="Private Key"
-				placeholder="Enter your private key"
-				icon={<MaterialIcon icon="key" />}
 				value={privateKey}
-				onChange={(e: any) => setPrivateKey(e.target.value)}
+				onChange={(value: string) => setPrivateKey(value)}
 				required
-				error={privateKey.length === 0}
-				errorMessage="Private key is required"
 			/>
 			<button
 				type="submit"

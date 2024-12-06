@@ -17,4 +17,11 @@ export const regex = {
 	username: /^[a-zA-Z0-9]{2,30}$/,
 	// URL
 	url: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+	// key should be exactly 32 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character, and can't contain any other then alphanumeric and !@#$%^&*
+	key: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%&])[A-Za-z\d!@#$%&]{32}$/,
+	hasUpperCase: /(?=.*[A-Z])/,
+	hasLowerCase: /(?=.*[a-z])/,
+	hasNumber: /(?=.*\d)/,
+	hasSpecialChar: /(?=.*[!@#$%&])/,
+	hasSpaces: /[\s]/,
 };

@@ -1,12 +1,13 @@
+import { InputPrivateKey } from "@/components";
 import { LibraryApi } from "@/connections";
-import { useHttpClient } from "@/hooks";
+import { useHttpClient, useStore } from "@/hooks";
+import { Responsive } from "@/layouts";
 import { Button, Input, MaterialIcon, Popup } from "@/library";
 import { IArtifact, ICreateArtifact } from "@/types";
 import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
-import { Responsive } from "@/layouts";
 
 interface IAddNewArtifactProps {
 	onClose: () => void;
@@ -16,6 +17,7 @@ interface IAddNewArtifactProps {
 const classes = stylesConfig(styles, "artifact-add");
 
 const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
+	const { services } = useStore();
 	const { data, loading, call } = useHttpClient<IArtifact>();
 	const [artifactDetails, setArtifactDetails] = useState<ICreateArtifact>({
 		service: "",
@@ -50,6 +52,20 @@ const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 							placeholder="Enter service name"
 							value={artifactDetails.service}
 							onChange={handleChange}
+							dropdown={{
+								enabled: services.length > 0,
+								options: services.map((service, index) => ({
+									id: `add-new-artifact-service-${index}`,
+									label: service,
+									value: service,
+								})),
+								onSelect: (option) => {
+									setArtifactDetails((prev) => ({
+										...prev,
+										service: option.value,
+									}));
+								},
+							}}
 						/>
 					</Responsive.Col>
 					<Responsive.Col xlg={50} lg={50} md={50} sm={100} xsm={100}>
@@ -81,7 +97,7 @@ const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 							name="password"
 							label="Password"
 							placeholder="Enter your password"
-							icon={<MaterialIcon icon="lock" />}
+							leftIcon={<MaterialIcon icon="lock" />}
 							value={artifactDetails.password}
 							onChange={handleChange}
 						/>
@@ -93,15 +109,15 @@ const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 						sm={100}
 						xsm={100}
 					>
-						<Input
+						<InputPrivateKey
 							className={classes("-input", "-input--full")}
-							type="password"
-							name="privateKey"
-							label="Private Key"
-							placeholder="Enter your private key"
-							icon={<MaterialIcon icon="key" />}
 							value={artifactDetails.privateKey}
-							onChange={handleChange}
+							onChange={(value) => {
+								setArtifactDetails((prev) => ({
+									...prev,
+									privateKey: value,
+								}));
+							}}
 						/>
 					</Responsive.Col>
 					<Responsive.Col

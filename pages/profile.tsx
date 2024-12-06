@@ -6,6 +6,7 @@ import { Button, MaterialIcon } from "@/library";
 import styles from "@/styles/pages/Home.module.scss";
 import { IUser, ServerSideResult } from "@/types";
 import { stylesConfig } from "@/utils";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const classes = stylesConfig(styles, "profile");
@@ -13,6 +14,7 @@ const classes = stylesConfig(styles, "profile");
 type ProfilePageProps = { user: IUser };
 
 const ProfilePage: React.FC<ProfilePageProps> = (props) => {
+	const router = useRouter();
 	const { dispatch, setUser } = useStore();
 	const [mode, setMode] = useState<"view" | "edit">("view");
 
@@ -23,18 +25,28 @@ const ProfilePage: React.FC<ProfilePageProps> = (props) => {
 
 	return (
 		<main id="profile" className={classes("")}>
-			<Button
-				className={classes("-button")}
-				variant="outlined"
-				icon={
-					<MaterialIcon
-						icon={mode === "view" ? "edit" : "visibility"}
-					/>
-				}
-				onClick={() => setMode((p) => (p === "view" ? "edit" : "view"))}
-			>
-				{mode === "view" ? "Edit Profile" : "View Profile"}
-			</Button>
+			<div className={classes("-actions")}>
+				<button
+					className={classes("-home")}
+					onClick={() => router.push(routes.HOME)}
+				>
+					<MaterialIcon icon="home" />
+				</button>
+				<Button
+					className={classes("-button")}
+					variant="outlined"
+					icon={
+						<MaterialIcon
+							icon={mode === "view" ? "edit" : "visibility"}
+						/>
+					}
+					onClick={() =>
+						setMode((p) => (p === "view" ? "edit" : "view"))
+					}
+				>
+					{mode === "view" ? "Edit Profile" : "View Profile"}
+				</Button>
+			</div>
 			{mode === "view" ? (
 				<Profile.View />
 			) : (

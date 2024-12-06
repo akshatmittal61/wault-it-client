@@ -9,9 +9,18 @@
 	gap: 24px;
 	padding: 24px;
 
+	@include responsive(phone) {
+		height: auto;
+		flex-direction: column-reverse;
+	}
+
 	img {
 		width: 40%;
 		object-fit: cover;
+
+		@include responsive(phone) {
+			width: 70%;
+		}
 	}
 
 	&-content {
@@ -22,8 +31,18 @@
 		flex-direction: column;
 		gap: 24px;
 
+		@include responsive(phone) {
+			width: 100%;
+			text-align: center;
+			align-items: center;
+		}
+
 		p {
 			width: 60%;
+
+			@include responsive(phone) {
+				width: 100%;
+			}
 		}
 	}
 }

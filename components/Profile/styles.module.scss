@@ -52,6 +52,10 @@
 		background-color: rgba(188, 203, 255, 0.3);
 		border: 1px dashed #1f316f;
 
+		@include responsive(phone) {
+			width: 100%;
+		}
+
 		& > * {
 			width: 100%;
 		}

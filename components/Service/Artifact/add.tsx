@@ -1,6 +1,6 @@
 import { InputPrivateKey } from "@/components";
 import { LibraryApi } from "@/connections";
-import { useHttpClient } from "@/hooks";
+import { useHttpClient, useStore } from "@/hooks";
 import { Responsive } from "@/layouts";
 import { Button, Input, MaterialIcon, Popup } from "@/library";
 import { IArtifact, ICreateArtifact } from "@/types";
@@ -17,6 +17,7 @@ interface IAddNewArtifactProps {
 const classes = stylesConfig(styles, "artifact-add");
 
 const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
+	const { services } = useStore();
 	const { data, loading, call } = useHttpClient<IArtifact>();
 	const [artifactDetails, setArtifactDetails] = useState<ICreateArtifact>({
 		service: "",
@@ -51,6 +52,20 @@ const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 							placeholder="Enter service name"
 							value={artifactDetails.service}
 							onChange={handleChange}
+							dropdown={{
+								enabled: services.length > 0,
+								options: services.map((service, index) => ({
+									id: `add-new-artifact-service-${index}`,
+									label: service,
+									value: service,
+								})),
+								onSelect: (option) => {
+									setArtifactDetails((prev) => ({
+										...prev,
+										service: option.value,
+									}));
+								},
+							}}
 						/>
 					</Responsive.Col>
 					<Responsive.Col xlg={50} lg={50} md={50} sm={100} xsm={100}>

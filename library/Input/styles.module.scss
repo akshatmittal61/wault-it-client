@@ -91,10 +91,6 @@
 		opacity: 0.25;
 
 		&--dropdown {
-			left: unset;
-			right: 0;
-			transform: translate(-50%, -50%);
-
 			svg path {
 				&:first-child {
 					fill: var(--theme-light-grey);

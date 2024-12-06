@@ -1,6 +1,7 @@
+import { InputPrivateKey } from "@/components";
 import { LibraryApi } from "@/connections";
 import { useHttpClient } from "@/hooks";
-import { Button, Input, MaterialIcon, Popup } from "@/library";
+import { Button, MaterialIcon, Popup } from "@/library";
 import { IRevealedArtifact } from "@/types";
 import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
@@ -47,15 +48,10 @@ const ArtifactRevealer: React.FC<IArtifactRevealerProps> = ({
 					<Block label="Password" value={data.password} showCopy />
 				) : (
 					<form className={classes("-form")} onSubmit={handleSubmit}>
-						<Input
+						<InputPrivateKey
 							className={classes("-input")}
-							type="password"
-							name="privateKey"
-							label="Private Key"
-							placeholder="Enter your private key"
-							icon={<MaterialIcon icon="lock" />}
 							value={privateKey}
-							onChange={(e: any) => setPrivateKey(e.target.value)}
+							onChange={(value: string) => setPrivateKey(value)}
 						/>
 						<Button
 							type="submit"

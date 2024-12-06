@@ -1,3 +1,4 @@
+import { InputPrivateKey } from "@/components";
 import { LibraryApi } from "@/connections";
 import { useHttpClient } from "@/hooks";
 import { Responsive } from "@/layouts";
@@ -99,7 +100,7 @@ const UpdateArtifact: React.FC<IUpdateArtifactProps> = ({
 							name="password"
 							label="Password"
 							placeholder="Enter your password"
-							icon={<MaterialIcon icon="lock" />}
+							leftIcon={<MaterialIcon icon="lock" />}
 							value={artifactDetails.password}
 							onChange={handleChange}
 						/>
@@ -111,15 +112,15 @@ const UpdateArtifact: React.FC<IUpdateArtifactProps> = ({
 						sm={100}
 						xsm={100}
 					>
-						<Input
+						<InputPrivateKey
 							className={classes("-input", "-input--full")}
-							type="password"
-							name="privateKey"
-							label="Private Key"
-							placeholder="Enter your private key"
-							icon={<MaterialIcon icon="key" />}
-							value={artifactDetails.privateKey}
-							onChange={handleChange}
+							value={artifactDetails.privateKey || ""}
+							onChange={(value) => {
+								setArtifactDetails((prev) => ({
+									...prev,
+									privateKey: value,
+								}));
+							}}
 						/>
 					</Responsive.Col>
 					<Responsive.Col

@@ -2,7 +2,6 @@
 @import "@/styles/config/typography";
 
 .input {
-	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
@@ -13,10 +12,18 @@
 	&__label {
 		width: 100%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: center;
-		gap: 24px;
 		color: var(--theme-black);
+		position: relative;
+	}
+
+	&:has(input:required) &__label {
+		&::after {
+			content: "*";
+			color: var(--material-red);
+			margin-left: 5px;
+		}
 	}
 
 	&__input {
@@ -49,6 +56,10 @@
 			border-bottom: 2px solid var(--transparent);
 		}
 
+		&:invalid {
+			border-bottom: 2px solid var(--material-red);
+		}
+
 		&::placeholder {
 			color: var(--theme-light-grey);
 		}
@@ -72,9 +83,6 @@
 		width: 1.25rem;
 		height: 1.25rem;
 		position: absolute;
-		top: 50%;
-		left: 0;
-		transform: translate(50%, -50%);
 		cursor: pointer;
 		user-select: none;
 		display: inline-flex;
@@ -101,17 +109,30 @@
 		}
 	}
 
+	&__icon--left {
+		top: 50%;
+		left: 0;
+		transform: translate(50%, -50%);
+	}
+
+	&__icon--right {
+		top: 50%;
+		right: 0;
+		transform: translate(-50%, -50%);
+	}
+
 	&:has(input:active) &__icon,
 	&:has(input:focus) &__icon {
 		opacity: 1;
 	}
 
-	&:has(.input__icon) &__input {
-		padding: 0.5rem 0.5rem 0.5rem 2.5rem;
+	&:has(.input__icon--left) &__input {
+		padding-left: 2.5rem;
 	}
 
+	&:has(.input__icon--right) &__input,
 	&:has(.input__icon--dropdown) &__input {
-		padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+		padding-right: 2.5rem;
 	}
 
 	&:has(input:active) &__dropdown,

@@ -99,7 +99,7 @@
 		flex-direction: column;
 		gap: 24px;
 
-		button {
+		& > * {
 			width: 100%;
 		}
 	}

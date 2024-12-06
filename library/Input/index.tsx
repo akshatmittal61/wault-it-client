@@ -12,7 +12,8 @@ const Input: React.FC<InputProps> = ({
 	style,
 	className,
 	dropdown,
-	icon,
+	leftIcon,
+	rightIcon,
 	error,
 	errorMessage,
 	...props
@@ -78,8 +79,10 @@ const Input: React.FC<InputProps> = ({
 				</label>
 			) : null}
 			<div className={classes("__input-container")}>
-				{icon && !dropdown?.enabled ? (
-					<div className={classes("__icon")}>{icon}</div>
+				{leftIcon && !dropdown?.enabled ? (
+					<div className={classes("__icon", "__icon--left")}>
+						{leftIcon}
+					</div>
 				) : null}
 				<input
 					className={classes("__input")}
@@ -116,6 +119,11 @@ const Input: React.FC<InputProps> = ({
 					})()}
 					{...props}
 				/>
+				{rightIcon && !dropdown?.enabled ? (
+					<div className={classes("__icon", "__icon--right")}>
+						{rightIcon}
+					</div>
+				) : null}
 				{dropdown?.enabled ? (
 					<div
 						className={classes("__icon", "__icon--dropdown")}

@@ -12,10 +12,17 @@ const classes = stylesConfig(styles, "home");
 type HomePageProps = { user: IUser };
 
 const HomePage: React.FC<HomePageProps> = (props) => {
-	const { dispatch, setUser, services, getAllServices, searchQuery } =
-		useStore();
+	const {
+		dispatch,
+		setUser,
+		services,
+		setServices,
+		getAllServices,
+		searchQuery,
+	} = useStore();
 	const client = useHttpClient<Array<string>>();
 	const [openAddArtifactPopup, setopenAddArtifactPopup] = useState(false);
+	const [openImporterPopup, setOpenImporterPopup] = useState(false);
 
 	const getServices = async () => {
 		await client.dispatch(getAllServices, undefined);
@@ -30,7 +37,10 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 	return (
 		<>
 			<main id="home" className={classes("")}>
-				<Components.Head onAdd={() => setopenAddArtifactPopup(true)} />
+				<Components.Head
+					onAdd={() => setopenAddArtifactPopup(true)}
+					onImport={() => setOpenImporterPopup(true)}
+				/>
 				{client.loading ? (
 					<Loader.Spinner />
 				) : services.length > 0 ? (
@@ -61,6 +71,15 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 					/>
 				)}
 			</main>
+			{openImporterPopup ? (
+				<Service.Importer
+					onClose={() => setOpenImporterPopup(false)}
+					onImport={(updatedServices) => {
+						dispatch(setServices(updatedServices));
+						setOpenImporterPopup(false);
+					}}
+				/>
+			) : null}
 			{openAddArtifactPopup ? (
 				<Service.AddArtifact
 					onClose={() => setopenAddArtifactPopup(false)}

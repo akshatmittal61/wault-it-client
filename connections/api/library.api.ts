@@ -60,4 +60,16 @@ export class LibraryApi {
 		const response = await http.delete(`/artifacts/${id}`, { headers });
 		return response.data;
 	}
+	public static async importArtifactsFromCsv(
+		dataUri: string,
+		privateKey: string,
+		headers?: any
+	): Promise<ApiRes<Array<string>>> {
+		const response = await http.post(
+			"/artifacts/import",
+			{ file: dataUri, privateKey },
+			{ headers }
+		);
+		return response.data;
+	}
 }

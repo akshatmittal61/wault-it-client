@@ -41,7 +41,7 @@ export const readFile = (file: File) => {
 		reader.onerror = () => {
 			reject(reader.error);
 		};
-		reader.readAsText(file);
+		reader.readAsDataURL(file);
 	});
 };
 

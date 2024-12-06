@@ -1,0 +1,186 @@
+@import "@/styles/config/mixins";
+
+.artifacts-importer {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	gap: 24px;
+
+	&-header {
+		width: 100%;
+		height: 64px;
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding: 10px 16px;
+		border-radius: 6px;
+		border: 1px solid transparent;
+
+		svg {
+			width: 24px;
+			height: 24px;
+		}
+
+		&-main {
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 4px;
+			margin-right: auto;
+
+			& > * {
+				line-height: 110%;
+			}
+		}
+
+		&-link {
+			color: inherit;
+			text-decoration: none;
+			width: 28px;
+			height: 28px;
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+			padding: 4px;
+		}
+
+		&--empty {
+			justify-content: center;
+			border-color: var(--color-yellow-400);
+			background: rgba(243, 232, 186, 0.5);
+			color: var(--color-yellow-400);
+
+			svg {
+				color: var(--color-yellow-400);
+			}
+		}
+
+		&--uploading {
+			justify-content: space-between;
+			border-color: var(--color-blue-400);
+			background: rgba(186, 243, 255, 0.2);
+
+			svg {
+				color: var(--color-blue-400);
+			}
+		}
+
+		&--uploaded {
+			justify-content: space-between;
+			border-color: var(--color-green-400);
+			background: rgba(186, 243, 219, 0.2);
+
+			svg {
+				color: var(--color-green-400);
+			}
+		}
+
+		button {
+			@include init-button;
+			width: 20px;
+			height: 20px;
+		}
+
+		&-reset {
+			@include init-button();
+			margin-left: auto;
+			border-radius: 500px;
+			padding: 4px;
+			widows: 28px;
+			height: 28px;
+
+			svg {
+				color: var(--color-red);
+			}
+
+			path {
+				stroke: var(--color-red-400);
+			}
+		}
+	}
+
+	&-form {
+		width: 100%;
+		height: 100%;
+		border-radius: 8px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-flow: column;
+		gap: 20px;
+		padding: 24px;
+		flex: 0 1 auto;
+		background-color: rgba(188, 203, 255, 0.3);
+		border: 1px dashed #1f316f;
+
+		&__content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-flow: column;
+			gap: 8px;
+		}
+
+		input {
+			display: none;
+		}
+	}
+
+	&-submit {
+		width: 100%;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
+		gap: 24px;
+		padding: 0.5rem;
+	}
+
+	&-form label,
+	&-upload-btn {
+		@include init-button;
+		cursor: pointer;
+		user-select: none;
+		border-radius: 8px;
+		padding: 10px 24px;
+		letter-spacing: -3%;
+		@include font(Poppins, 16px, 500, 110%);
+		background-color: #1f316f;
+		color: #fff;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&-upload-btn {
+		width: 100%;
+		height: 42px;
+
+		&--loader {
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			display: flex;
+			flex: 0 0 auto;
+			border: 3px solid transparent;
+			animation: spin 1s linear infinite;
+			border-right-color: var(--color-white);
+			border-bottom-color: var(--color-white);
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+	}
+}
+
+@keyframes spin {
+	100% {
+		transform: rotate(360deg);
+	}
+}

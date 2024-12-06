@@ -1,56 +1,45 @@
 import { authenticatedPage } from "@/client";
+import { Profile } from "@/components";
 import { routes } from "@/constants";
 import { useStore } from "@/hooks";
-import { Avatar, Button, MaterialIcon, Typography } from "@/library";
+import { Button, MaterialIcon } from "@/library";
 import styles from "@/styles/pages/Home.module.scss";
 import { IUser, ServerSideResult } from "@/types";
-import { copyToClipboard, Notify, stylesConfig } from "@/utils";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { stylesConfig } from "@/utils";
+import React, { useEffect, useState } from "react";
 
 const classes = stylesConfig(styles, "profile");
 
 type ProfilePageProps = { user: IUser };
 
 const ProfilePage: React.FC<ProfilePageProps> = (props) => {
-	const router = useRouter();
-	const { dispatch, user, setUser, logoutUser } = useStore();
+	const { dispatch, setUser } = useStore();
+	const [mode, setMode] = useState<"view" | "edit">("view");
 
 	useEffect(() => {
 		dispatch(setUser(props.user));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const logout = async () => {
-		await dispatch(logoutUser()).unwrap();
-		router.push(routes.LOGIN);
-	};
-
 	return (
 		<main id="profile" className={classes("")}>
-			<Avatar src={user.avatar || ""} alt={user.name} size="large" />
-			<Typography as="h1" size="xxxl" className={classes("-name")}>
-				Hi, {user.name}
-			</Typography>
-			<Typography size="lg" className={classes("-email")}>
-				{user.email}{" "}
-				<button
-					className={classes("-copy")}
-					onClick={() => {
-						copyToClipboard(user.email);
-						Notify.success("Email copied to clipboard");
-					}}
-				>
-					<MaterialIcon icon="content_copy" />
-				</button>
-			</Typography>
 			<Button
-				onClick={logout}
-				size="large"
-				icon={<MaterialIcon icon="logout" />}
+				className={classes("-button")}
+				variant="outlined"
+				icon={
+					<MaterialIcon
+						icon={mode === "view" ? "edit" : "visibility"}
+					/>
+				}
+				onClick={() => setMode((p) => (p === "view" ? "edit" : "view"))}
 			>
-				Logout
+				{mode === "view" ? "Edit Profile" : "View Profile"}
 			</Button>
+			{mode === "view" ? (
+				<Profile.View />
+			) : (
+				<Profile.Edit onEdit={() => setMode("view")} />
+			)}
 		</main>
 	);
 };

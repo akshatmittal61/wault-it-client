@@ -8,4 +8,5 @@ export { default as InputPrivateKey } from "./InputPrivateKey";
 export * as Landing from "./Landing";
 export * as Loader from "./Loader";
 export { default as Placeholder } from "./Placeholder";
+export * as Profile from "./Profile";
 export * as Service from "./Service";

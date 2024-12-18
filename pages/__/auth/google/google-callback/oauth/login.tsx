@@ -14,11 +14,11 @@ type GoogleOAuthRedirectedPageProps = React.FC<{ token: string }>;
 
 const GoogleOAuthRedirectedPage: GoogleOAuthRedirectedPageProps = (props) => {
 	const router = useRouter();
-	const { dispatch, setUser } = useStore();
+	const { initStore } = useStore();
 	const continueWithGoogle = async () => {
 		try {
 			const res = await AuthApi.continueOAuthWithGoogle(props.token);
-			dispatch(setUser(res.data));
+			initStore(res.data);
 			if (res.data.name) {
 				router.push(routes.HOME);
 			} else {

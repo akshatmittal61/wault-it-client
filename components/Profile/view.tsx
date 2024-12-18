@@ -13,10 +13,10 @@ const classes = stylesConfig(styles, "view-profile");
 
 const ViewProfile: React.FC<IViewProfileProps> = () => {
 	const router = useRouter();
-	const { user, logoutUser, dispatch } = useStore();
+	const { user, logout } = useStore();
 
-	const logout = async () => {
-		await dispatch(logoutUser()).unwrap();
+	const logoutUser = async () => {
+		await logout();
 		router.push(routes.LOGIN);
 	};
 	return (
@@ -38,7 +38,7 @@ const ViewProfile: React.FC<IViewProfileProps> = () => {
 				</button>
 			</Typography>
 			<Button
-				onClick={logout}
+				onClick={logoutUser}
 				size="large"
 				icon={<MaterialIcon icon="logout" />}
 			>

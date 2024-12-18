@@ -36,8 +36,8 @@ const loggedOutSideBarLinks: Array<Navigation> = [
 
 const loggedInSideBarLinks: Array<Navigation> = [
 	{
-		title: "My Groups",
-		icon: "group",
+		title: "All Services",
+		icon: "design_services",
 		route: routes.HOME,
 	},
 	{

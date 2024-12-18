@@ -3,8 +3,10 @@ export const routes = Object.freeze({
 	HOME: "/home",
 	ABOUT: "/about",
 	LOGIN: "/login",
+	LOGOUT: "/logout",
 	ONBOARDING: "/onboarding",
 	ROOM: (name: string) => {
+		if (name.length === 0) return "/room";
 		const queryParams = { name };
 		return `/room?${new URLSearchParams(queryParams).toString()}`;
 	},

@@ -79,7 +79,12 @@ export const useStore = () => {
 		syncNetworkStatus();
 		if (user) {
 			syncUserState(user);
+			syncEverything();
 		}
+	};
+
+	const logout = async () => {
+		await dispatch(allHelpers.authHelpers.logoutUser()).unwrap();
 	};
 
 	return {
@@ -108,5 +113,6 @@ export const useStore = () => {
 		openSidebar,
 		closeSideBar,
 		initStore,
+		logout,
 	};
 };

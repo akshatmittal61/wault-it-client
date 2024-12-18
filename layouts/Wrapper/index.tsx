@@ -1,7 +1,8 @@
-import { Footer, Header, Loader } from "@/components";
+import { Footer, Header, Loader, SideBar } from "@/components";
 import { frontendBaseUrl, routes } from "@/constants";
 import { useDevice, useStore } from "@/hooks";
 import { Seo } from "@/layouts";
+import { Logger } from "@/log";
 import { IUser } from "@/types";
 import { stylesConfig } from "@/utils";
 import { useRouter } from "next/router";
@@ -27,6 +28,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ children, user }) => {
 		routes.PRIVACY_POLICY,
 		routes.HOME,
 		routes.ROOM(""),
+		routes.PROFILE,
 	];
 	const pagesSupportingFooter: Array<string> = [
 		routes.ROOT,
@@ -36,6 +38,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ children, user }) => {
 	const pagesSupportingContainer: Array<string> = [
 		routes.HOME,
 		routes.ROOM(""),
+		routes.PROFILE,
 	];
 
 	// only show loader when route is changing
@@ -61,6 +64,7 @@ export const Wrapper: React.FC<WrapperProps> = ({ children, user }) => {
 	}, []);
 
 	useEffect(() => {
+		Logger.debug("router.pathname", router.pathname, routes.ROOM(""));
 		if (device === "mobile") {
 			closeSideBar();
 		}
@@ -133,6 +137,9 @@ export const Wrapper: React.FC<WrapperProps> = ({ children, user }) => {
 			/>
 			{pagesSupportingHeader.includes(router.pathname) ? (
 				<Header />
+			) : null}
+			{pagesSupportingContainer.includes(router.pathname) ? (
+				<SideBar />
 			) : null}
 			{showLoader ? <Loader.Bar /> : null}
 			<main

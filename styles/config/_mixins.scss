@@ -48,18 +48,6 @@
 	}
 }
 
-@mixin color-scheme($mode) {
-	@if $mode ==light {
-		@media (prefers-color-scheme: light) {
-			@content;
-		}
-	} @else if $mode ==dark {
-		@media (prefers-color-scheme: dark) {
-			@content;
-		}
-	}
-}
-
 @mixin theme($theme) {
 	// if body has no data-theme attribute, then apply the styles
 

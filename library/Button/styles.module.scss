@@ -18,38 +18,64 @@
 	color: var(--theme-white);
 	border: 1px solid transparent;
 
+	&--theme {
+		&--default {
+			--button-theme: var(--accent-color-heavy);
+		}
+
+		&--success {
+			--button-theme: var(--theme-green);
+		}
+
+		&--error {
+			--button-theme: var(--theme-red);
+		}
+
+		&--warning {
+			--button-theme: var(--theme-yellow);
+		}
+
+		&--info {
+			--button-theme: var(--theme-blue);
+		}
+	}
+
 	&--variant {
 		&--filled {
-			background-color: var(--accent-color);
+			background-color: var(--button-theme);
 			color: var(--theme-white);
 		}
 
 		&--outlined {
 			background-color: transparent;
-			color: var(--theme-black);
-			border-color: var(--accent-color);
+			color: var(--button-theme);
+			border-color: var(--button-theme);
+
+			svg path {
+				stroke: var(--button-theme);
+			}
 		}
 
 		&--text {
 			background-color: transparent;
-			color: var(--accent-color);
+			color: var(--button-theme);
 		}
 	}
 
 	&--size {
 		&--small {
-			padding: 0.25rem 0.75rem;
+			padding: 4px 8px;
 			@include typography($size: sm, $weight: regular);
 		}
 
 		&--medium {
-			padding: 0.5rem 1rem;
-			@include typography(s, regular);
+			padding: 8px 16px;
+			@include typography($size: s, $weight: regular);
 		}
 
 		&--large {
-			padding: 0.65rem 1.35rem;
-			@include typography(lg, regular);
+			padding: 12px 24px;
+			@include typography($size: md, $weight: regular);
 		}
 	}
 
@@ -62,24 +88,16 @@
 	&--size {
 		&--medium {
 			.btn__icon {
-				span {
-					font-size: 1.25rem;
-				}
-
 				svg,
 				img {
-					width: 20px;
-					height: 20px;
+					width: 18px;
+					height: 18px;
 				}
 			}
 		}
 
 		&--small {
 			.btn__icon {
-				span {
-					font-size: 1rem;
-				}
-
 				svg,
 				img {
 					width: 16px;
@@ -90,10 +108,6 @@
 
 		&--large {
 			.btn__icon {
-				span {
-					font-size: 1.5rem;
-				}
-
 				svg,
 				img {
 					width: 20px;
@@ -137,6 +151,81 @@
 
 	&--loading {
 		cursor: not-allowed;
+	}
+}
+
+.icon-btn {
+	@include init-button();
+	width: 2.5rem;
+	height: 2.5rem;
+	position: relative;
+	padding: 1rem;
+	border-radius: 500px;
+	color: var(--tcolor);
+
+	.material-symbols-outlined {
+		font-size: 1.5rem;
+	}
+
+	&--size {
+		&--small {
+			width: 2rem;
+			height: 2rem;
+			padding: 0.5rem;
+
+			.material-symbols-outlined {
+				font-size: 1rem;
+			}
+		}
+
+		&--medium {
+			width: 2.5rem;
+			height: 2.5rem;
+			padding: 1rem;
+
+			.material-symbols-outlined {
+				font-size: 1.5rem;
+			}
+		}
+
+		&--large {
+			width: 3rem;
+			height: 3rem;
+			padding: 1.5rem;
+
+			.material-symbols-outlined {
+				font-size: 2rem;
+			}
+		}
+	}
+
+	&:hover {
+		background-color: var(--back-shadow-light);
+	}
+
+	span {
+		z-index: 5;
+	}
+
+	svg {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+
+		path {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&:hover {
+		svg {
+			transform: translate(-50%, -50%) rotate(-90deg);
+		}
 	}
 }
 

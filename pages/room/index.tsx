@@ -30,7 +30,7 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 		dispatch(setUser(props.user));
 		getArtifacts();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [serviceName]);
 	return (
 		<main id="room" className={classes("")}>
 			<Typography
@@ -47,7 +47,7 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 			) : client.data.length === 0 ? (
 				<Typography>No artifacts found for {serviceName}</Typography>
 			) : (
-				<Masonry className={classes("-listing")}>
+				<Masonry xlg={3} className={classes("-listing")}>
 					{artifacts
 						.filter((a) => a.service === serviceName)
 						.map((artifact) => (

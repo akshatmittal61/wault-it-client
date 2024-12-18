@@ -10,3 +10,4 @@ export * as Loader from "./Loader";
 export { default as Placeholder } from "./Placeholder";
 export * as Profile from "./Profile";
 export * as Service from "./Service";
+export { default as SideBar } from "./Side";

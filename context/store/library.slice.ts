@@ -1,13 +1,7 @@
 import { Logger } from "@/log";
-import { IArtifact } from "@/types";
+import { Action, IArtifact, LibrarySlice } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { libraryHelpers } from "../helpers";
-
-type LibrarySlice = {
-	services: Array<string>;
-	artifacts: Array<IArtifact>;
-	searchQuery: string;
-};
 
 const initialState: LibrarySlice = {
 	services: [],
@@ -19,26 +13,26 @@ export const librarySlice = createSlice({
 	name: "library",
 	initialState,
 	reducers: {
-		setServices: (state, action) => {
+		setServices: (state, action: Action<Array<string>>) => {
 			state.services = action.payload;
 		},
-		setArtifacts: (state, action) => {
+		setArtifacts: (state, action: Action<Array<IArtifact>>) => {
 			state.artifacts = action.payload;
 		},
-		setSearchQuery: (state, action) => {
+		setSearchQuery: (state, action: Action<string>) => {
 			state.searchQuery = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(
 			libraryHelpers.getAllServices.fulfilled,
-			(state, action) => {
+			(state, action: Action<Array<string>>) => {
 				state.services = action.payload;
 			}
 		);
 		builder.addCase(
 			libraryHelpers.getArtifactsForService.fulfilled,
-			(state, action) => {
+			(state, action: Action<Array<IArtifact>>) => {
 				const artifactsToSet = [...state.artifacts];
 				action.payload.forEach((artifact) => {
 					// if an artifact exists, replace it, else add it
@@ -56,7 +50,7 @@ export const librarySlice = createSlice({
 		);
 		builder.addCase(
 			libraryHelpers.createArtifact.fulfilled,
-			(state, action) => {
+			(state, action: Action<IArtifact>) => {
 				if (!state.services.includes(action.payload.service)) {
 					state.services.push(action.payload.service);
 				}
@@ -65,7 +59,7 @@ export const librarySlice = createSlice({
 		);
 		builder.addCase(
 			libraryHelpers.updateArtifact.fulfilled,
-			(state, action) => {
+			(state, action: Action<IArtifact>) => {
 				if (!state.services.includes(action.payload.service)) {
 					state.services.push(action.payload.service);
 				}
@@ -79,7 +73,7 @@ export const librarySlice = createSlice({
 		);
 		builder.addCase(
 			libraryHelpers.deleteArtifact.fulfilled,
-			(state, action) => {
+			(state, action: Action<IArtifact>) => {
 				state.artifacts = state.artifacts.filter(
 					(artifact) => artifact.id !== action.payload.id
 				);
@@ -102,7 +96,7 @@ export const librarySlice = createSlice({
 		);
 		builder.addCase(
 			libraryHelpers.searchForServices.fulfilled,
-			(state, action) => {
+			(state, action: Action<Array<string>>) => {
 				state.services = action.payload;
 			}
 		);

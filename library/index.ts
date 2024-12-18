@@ -1,9 +1,8 @@
 export * from "./Avatar";
+export { default as Button } from "./Button";
+export { default as IconButton } from "./Button/icon";
 export * from "./icons";
+export { default as Input } from "./Input";
 export * from "./Pane";
 export * from "./Popup";
-import Button from "./Button";
-import Input from "./Input";
-import Typography from "./Typography";
-
-export { Button, Input, Typography };
+export { default as Typography } from "./Typography";

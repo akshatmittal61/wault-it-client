@@ -3,7 +3,10 @@ export const routes = Object.freeze({
 	HOME: "/home",
 	LOGIN: "/login",
 	ONBOARDING: "/onboarding",
-	ROOM: (name: string) => `/room?name=${name}`,
+	ROOM: (name: string) => {
+		const queryParams = { name };
+		return `/room?${new URLSearchParams(queryParams).toString()}`;
+	},
 	PROFILE: "/profile",
 	SETTINGS: "/settings",
 	ERROR: "/500",

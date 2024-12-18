@@ -1,7 +1,7 @@
 import { InputPrivateKey } from "@/components";
 import { LibraryApi } from "@/connections";
 import { useHttpClient } from "@/hooks";
-import { Button, MaterialIcon, Popup } from "@/library";
+import { Button, MaterialIcon, Pane } from "@/library";
 import { IRevealedArtifact } from "@/types";
 import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
@@ -36,12 +36,7 @@ const ArtifactRevealer: React.FC<IArtifactRevealerProps> = ({
 		}
 	};
 	return (
-		<Popup
-			width="300px"
-			height="375px"
-			onClose={onClose}
-			title="Reveal Artifact"
-		>
+		<Pane width="400px" onClose={onClose} title="Reveal Artifact">
 			<div className={classes("")}>
 				<Block label="Identifier" value={identifier} showCopy />
 				{data.password ? (
@@ -64,7 +59,7 @@ const ArtifactRevealer: React.FC<IArtifactRevealerProps> = ({
 					</form>
 				)}
 			</div>
-		</Popup>
+		</Pane>
 	);
 };
 

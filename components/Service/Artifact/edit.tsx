@@ -1,8 +1,8 @@
 import { InputPrivateKey } from "@/components";
-import { LibraryApi } from "@/connections";
+import { libraryHelpers } from "@/context/helpers";
 import { useHttpClient, useStore } from "@/hooks";
 import { Responsive } from "@/layouts";
-import { Button, Input, MaterialIcon, Popup } from "@/library";
+import { Button, Input, MaterialIcon, Pane } from "@/library";
 import { IArtifact, IUpdateArtifact } from "@/types";
 import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
@@ -25,7 +25,7 @@ const UpdateArtifact: React.FC<IUpdateArtifactProps> = ({
 	onUpdate,
 }) => {
 	const { services } = useStore();
-	const { data, loading, call } = useHttpClient<IArtifact>();
+	const { data, loading, dispatch } = useHttpClient<IArtifact>();
 	const [artifactDetails, setArtifactDetails] = useState<IUpdateArtifact>({
 		service: artifact.service,
 		identifier: artifact.identifier,
@@ -51,14 +51,17 @@ const UpdateArtifact: React.FC<IUpdateArtifactProps> = ({
 				payload.password = artifactDetails.password;
 			if (Object.keys(payload).length === 0) throw "Nothing to update";
 			payload.privateKey = artifactDetails.privateKey;
-			await call(LibraryApi.updateArtifact, id, payload);
+			await dispatch(libraryHelpers.updateArtifact, {
+				id,
+				data: payload,
+			});
 			onUpdate(data);
 		} catch (error) {
 			Notify.error(error);
 		}
 	};
 	return (
-		<Popup title="Update Artifact" onClose={onClose}>
+		<Pane title="Update Artifact" onClose={onClose}>
 			<form className={classes("")} onSubmit={handleSubmit}>
 				<Responsive.Row>
 					<Responsive.Col xlg={50} lg={50} md={50} sm={100} xsm={100}>
@@ -155,7 +158,7 @@ const UpdateArtifact: React.FC<IUpdateArtifactProps> = ({
 					</Responsive.Col>
 				</Responsive.Row>
 			</form>
-		</Popup>
+		</Pane>
 	);
 };
 

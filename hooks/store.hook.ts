@@ -11,7 +11,7 @@ export const useStore = () => {
 	const dispatch = useDispatch<any>();
 
 	const user = useSelector(userSelector);
-	const { services, searchQuery } = useSelector(librarySelector);
+	const { services, artifacts, searchQuery } = useSelector(librarySelector);
 
 	return {
 		// dispatch takes an action object and sends it to the store
@@ -19,6 +19,7 @@ export const useStore = () => {
 		// user and skills: state values
 		user,
 		services,
+		artifacts,
 		searchQuery,
 		// actions
 		...userSlice.actions,

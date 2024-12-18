@@ -1,4 +1,4 @@
-import { LibraryApi } from "@/connections";
+import { libraryHelpers } from "@/context/helpers";
 import { useConfirmationModal, useHttpClient } from "@/hooks";
 import { Button, MaterialIcon } from "@/library";
 import { IArtifact } from "@/types";
@@ -25,10 +25,10 @@ const ServiceArtifact: React.FC<IServiceArtifactProps> = ({
 }) => {
 	const [showRevealer, setShowRevealer] = useState(false);
 	const [showUpdater, setShowUpdater] = useState(false);
-	const { loading: deleting, call: deleteExpense } = useHttpClient();
+	const { loading: deleting, dispatch } = useHttpClient();
 	const deleteArtifactHelper = async () => {
 		try {
-			await deleteExpense(LibraryApi.deleteArtifact, artifact.id);
+			await dispatch(libraryHelpers.deleteArtifact, artifact.id);
 			onDelete();
 		} catch (error) {
 			Notify.error(error);

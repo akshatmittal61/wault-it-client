@@ -1,7 +1,7 @@
 import { authenticatedPage } from "@/client";
 import { Loader, Service } from "@/components";
-import { LibraryApi } from "@/connections";
 import { routes } from "@/constants";
+import { libraryHelpers } from "@/context/helpers";
 import { useHttpClient, useStore } from "@/hooks";
 import { Masonry } from "@/layouts";
 import { Typography } from "@/library";
@@ -15,12 +15,15 @@ const classes = stylesConfig(styles, "room");
 type RoomPageProps = { user: IUser; service: string };
 
 const RoomPage: React.FC<RoomPageProps> = (props) => {
-	const { dispatch, setUser } = useStore();
+	const { dispatch, setUser, artifacts } = useStore();
 	const client = useHttpClient<Array<IArtifact>>([]);
 	const serviceName = props.service;
 
 	const getArtifacts = async () => {
-		await client.call(LibraryApi.getArtifactsForService, serviceName);
+		await client.dispatch(
+			libraryHelpers.getArtifactsForService,
+			serviceName
+		);
 	};
 
 	useEffect(() => {
@@ -45,14 +48,16 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 				<Typography>No artifacts found for {serviceName}</Typography>
 			) : (
 				<Masonry className={classes("-listing")}>
-					{client.data.map((artifact) => (
-						<Service.Artifact
-							key={`room-${serviceName}-${artifact.id}`}
-							artifact={artifact}
-							onUpdate={getArtifacts}
-							onDelete={getArtifacts}
-						/>
-					))}
+					{artifacts
+						.filter((a) => a.service === serviceName)
+						.map((artifact) => (
+							<Service.Artifact
+								key={`room-${serviceName}-${artifact.id}`}
+								artifact={artifact}
+								onUpdate={getArtifacts}
+								onDelete={getArtifacts}
+							/>
+						))}
 				</Masonry>
 			)}
 		</main>

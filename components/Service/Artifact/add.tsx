@@ -1,8 +1,8 @@
 import { InputPrivateKey } from "@/components";
-import { LibraryApi } from "@/connections";
+import { libraryHelpers } from "@/context/helpers";
 import { useHttpClient, useStore } from "@/hooks";
 import { Responsive } from "@/layouts";
-import { Button, Input, MaterialIcon, Popup } from "@/library";
+import { Button, Input, MaterialIcon, Pane } from "@/library";
 import { IArtifact, ICreateArtifact } from "@/types";
 import { Notify } from "@/utils";
 import { stylesConfig } from "@/utils/functions";
@@ -11,14 +11,14 @@ import styles from "./styles.module.scss";
 
 interface IAddNewArtifactProps {
 	onClose: () => void;
-	onAdd: (_: IArtifact) => void;
+	onAdd: () => void;
 }
 
 const classes = stylesConfig(styles, "artifact-add");
 
 const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 	const { services } = useStore();
-	const { data, loading, call } = useHttpClient<IArtifact>();
+	const { loading, dispatch } = useHttpClient<IArtifact>();
 	const [artifactDetails, setArtifactDetails] = useState<ICreateArtifact>({
 		service: "",
 		identifier: "",
@@ -33,14 +33,14 @@ const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			await call(LibraryApi.createArtifact, artifactDetails);
-			onAdd(data);
+			await dispatch(libraryHelpers.createArtifact, artifactDetails);
+			onAdd();
 		} catch (error) {
 			Notify.error(error);
 		}
 	};
 	return (
-		<Popup title="Add New Artifact" onClose={onClose}>
+		<Pane title="Add New Artifact" onClose={onClose}>
 			<form className={classes("")} onSubmit={handleSubmit}>
 				<Responsive.Row>
 					<Responsive.Col xlg={50} lg={50} md={50} sm={100} xsm={100}>
@@ -137,7 +137,7 @@ const AddNewArtifact: React.FC<IAddNewArtifactProps> = ({ onClose, onAdd }) => {
 					</Responsive.Col>
 				</Responsive.Row>
 			</form>
-		</Popup>
+		</Pane>
 	);
 };
 

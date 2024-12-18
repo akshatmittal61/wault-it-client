@@ -41,7 +41,7 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 					onAdd={() => setopenAddArtifactPopup(true)}
 					onImport={() => setOpenImporterPopup(true)}
 				/>
-				{client.loading ? (
+				{client.loading && services.length === 0 ? (
 					<Loader.Spinner />
 				) : services.length > 0 ? (
 					<Components.Services />
@@ -84,7 +84,6 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 				<Service.AddArtifact
 					onClose={() => setopenAddArtifactPopup(false)}
 					onAdd={() => {
-						getServices();
 						setopenAddArtifactPopup(false);
 					}}
 				/>

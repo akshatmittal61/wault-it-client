@@ -39,7 +39,7 @@ export class LibraryApi {
 	public static async createArtifact(
 		artifact: ICreateArtifact,
 		headers?: any
-	) {
+	): Promise<ApiRes<IArtifact>> {
 		const response = await http.post("/artifacts", artifact, { headers });
 		return response.data;
 	}
@@ -47,7 +47,7 @@ export class LibraryApi {
 		id: string,
 		artifact: IUpdateArtifact,
 		headers?: any
-	) {
+	): Promise<ApiRes<IArtifact>> {
 		const response = await http.patch(`/artifacts/${id}`, artifact, {
 			headers,
 		});

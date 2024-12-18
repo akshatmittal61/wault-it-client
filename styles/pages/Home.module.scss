@@ -1,7 +1,7 @@
 @import "@/styles/config/mixins";
 
 .landing {
-	width: 100vw;
+	width: 100%;
 	min-height: 100vh;
 	display: flex;
 	justify-content: flex-start;
@@ -12,7 +12,7 @@
 }
 
 .home {
-	width: 100vw;
+	width: 100%;
 	min-height: 100vh;
 	display: flex;
 	justify-content: flex-start;

@@ -1,8 +1,6 @@
 import { authHelpers, userHelpers } from "@/context/helpers";
-import { IUser } from "@/types";
+import { Action, IUser, UserSlice } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
-
-type UserSlice = IUser;
 
 const initialState: UserSlice = {
 	name: "",
@@ -14,7 +12,7 @@ export const userSlice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		setUser: (state, action: { payload: Partial<IUser>; type: string }) => {
+		setUser: (state, action: Action<Partial<IUser>>) => {
 			state = { ...state, ...action.payload };
 			return state;
 		},
@@ -27,7 +25,7 @@ export const userSlice = createSlice({
 		// Fetch Logged In User
 		builder.addCase(
 			authHelpers.fetchAuthenticatedUser.fulfilled,
-			(state, action) => {
+			(state, action: Action<IUser>) => {
 				state = { ...state, ...action.payload };
 				return state;
 			}
@@ -48,7 +46,7 @@ export const userSlice = createSlice({
 		// Update Profile
 		builder.addCase(
 			userHelpers.updateProfile.fulfilled,
-			(state, action) => {
+			(state, action: Action<IUser>) => {
 				state = { ...state, ...action.payload };
 				return state;
 			}

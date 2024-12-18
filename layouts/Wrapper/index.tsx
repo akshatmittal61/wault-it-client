@@ -1,22 +1,42 @@
 import { Footer, Header, Loader } from "@/components";
 import { frontendBaseUrl, routes } from "@/constants";
+import { useDevice, useStore } from "@/hooks";
 import { Seo } from "@/layouts";
+import { IUser } from "@/types";
+import { stylesConfig } from "@/utils";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import styles from "./styles.module.scss";
 
-export const Wrapper: React.FC<any> = ({ children }) => {
+interface WrapperProps {
+	children: React.ReactNode;
+	user?: IUser;
+}
+
+const classes = stylesConfig(styles, "wrapper");
+
+export const Wrapper: React.FC<WrapperProps> = ({ children, user }) => {
 	const router = useRouter();
+	const { type: device } = useDevice();
+	const { initStore, syncNetworkStatus, closeSideBar } = useStore();
 	const [showLoader, setShowLoader] = useState(false);
-	const wrappablePagesPaths: Array<string> = [
+	const pagesSupportingHeader: Array<string> = [
 		routes.ROOT,
-		routes.ROOM("").split("?")[0],
-		routes.HOME,
-		routes.PRIVACY_POLICY,
-		routes.TERMS_AND_CONDITIONS,
 		routes.ERROR,
+		routes.PRIVACY_POLICY,
+		routes.HOME,
+		routes.ROOM(""),
 	];
-	const isWrappablePage = wrappablePagesPaths.includes(router.pathname);
+	const pagesSupportingFooter: Array<string> = [
+		routes.ROOT,
+		routes.ERROR,
+		routes.PRIVACY_POLICY,
+	];
+	const pagesSupportingContainer: Array<string> = [
+		routes.HOME,
+		routes.ROOM(""),
+	];
 
 	// only show loader when route is changing
 
@@ -31,6 +51,21 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 			setShowLoader(false);
 		});
 	}, [router.events]);
+
+	useEffect(() => {
+		initStore(user);
+		setInterval(() => {
+			syncNetworkStatus();
+		}, 10000);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		if (device === "mobile") {
+			closeSideBar();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [device, router.pathname]);
 
 	return (
 		<>
@@ -96,10 +131,22 @@ export const Wrapper: React.FC<any> = ({ children }) => {
 					siteName: "Wault It",
 				}}
 			/>
-			{isWrappablePage ? <Header /> : null}
+			{pagesSupportingHeader.includes(router.pathname) ? (
+				<Header />
+			) : null}
 			{showLoader ? <Loader.Bar /> : null}
-			{children}
-			{isWrappablePage ? <Footer /> : null}
+			<main
+				className={
+					pagesSupportingContainer.includes(router.pathname)
+						? classes("")
+						: ""
+				}
+			>
+				{children}
+			</main>
+			{pagesSupportingFooter.includes(router.pathname) ? (
+				<Footer />
+			) : null}
 			<Toaster position="top-center" />
 		</>
 	);
